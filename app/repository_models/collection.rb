@@ -3,6 +3,7 @@ class Collection < ActiveFedora::Base
   include CurationConcern::CollectionModel
   include Hydra::Collections::Collectible
   include Hydra::Derivatives
+  include ActiveFedora::RegisteredAttributes
 
   has_file_datastream :name => "content"
   has_file_datastream :name => "medium"
@@ -14,6 +15,8 @@ class Collection < ActiveFedora::Base
   makes_derivatives :generate_derivatives
 
   before_save :add_profile_image, :only => [ :create, :update ]
+
+  attribute :visibility, default: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 
   def can_be_member_of_collection?(collection)
     collection == self ? false : true

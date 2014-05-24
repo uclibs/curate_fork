@@ -42,4 +42,5 @@ class GenericWork < ActiveFedora::Base
   attribute :files, multiple: true, form: {as: :file},
     hint: "CTRL-Click (Windows) or CMD-Click (Mac) to select multiple files."
 
+  attribute :visibility, default: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
 end

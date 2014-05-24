@@ -53,6 +53,12 @@ describe "Showing and creating Collections" do
     msg = 'No items found'
     expect(page).to have_content(msg)
   end
+
+  it 'defaults to open visibility' do
+    login_as(user)
+    visit new_collection_path
+    expect(page).to have_checked_field('visibility_open')
+  end
 end
 
 describe 'Viewing a collection that is private' do
