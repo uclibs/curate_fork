@@ -26,7 +26,8 @@
       )%>
       per page
     <% end %>
-
+    <% byebug %>
+<% scrub_params(params) %>
       <%= search_as_hidden_fields(:omit_keys => [:per_page, :sort]) %>
 
       <button class="btn btn-primary pull-right">

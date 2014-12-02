@@ -1,6 +1,7 @@
 <h3><%= t('sufia.search_facets.label') %></h3>
 <% if current_user %>
   <%= form_tag search_action_url, :method => :get, :class => 'search-query-form form-inline clearfix' do %>
+<% scrub_params(params) %>
     <%= search_as_hidden_fields(:omit_keys => [:qt, :page]).html_safe %>
 
     <label class="search-scope">
