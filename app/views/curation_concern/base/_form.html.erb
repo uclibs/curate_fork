@@ -9,9 +9,21 @@
 
   <%= render 'on_behalf_of', curation_concern: curation_concern, f: f %>
 
-  <%= render 'form_descriptive_fields', curation_concern: curation_concern, f: f %>
+  <%= render "form_files_and_links", curation_concern: curation_concern, f: f %>
 
-  <%= render 'form_supplementary_fields', curation_concern: curation_concern, f: f %>
+  <%= render "form_required_information", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_additional_information", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_doi", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_content_editors", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_representative_image", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_permission", curation_concern: curation_concern, f: f %>
+
+  <%= render "form_content_license", curation_concern: curation_concern, f: f %>
 
   <%= render 'form_contributor_agreement', curation_concern: curation_concern, contributor_agreement: contributor_agreement %>
 

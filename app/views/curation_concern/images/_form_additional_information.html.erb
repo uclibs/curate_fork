@@ -6,7 +6,7 @@
         <small>Optional information</small>
       </legend>
 
-      <div class="row">
+    	<div class="row">
         <div class="span6">
           <%= f.input :date_created,
             label: "Date Created",
@@ -15,7 +15,16 @@
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_created.help', work_type: curation_concern.human_readable_type) %>
       </div>
-      
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :date_photographed,
+            placeholder: "YYYY-MM-DD"
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_photographed.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
       <div class="row">
         <div class="span6">
           <%= f.input :alternate_title,
@@ -24,6 +33,16 @@
           %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.alternate_title.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :genre, 
+            collection: Image.valid_types, 
+            input_html: { class: 'input-xlarge' } 
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.genre.help', work_type: curation_concern.human_readable_type) %>
       </div>
 
       <div class="row">
@@ -59,12 +78,52 @@
 
       <div class="row">
         <div class="span6">
-          <%= f.input :language,
-            as: :multi_value,
+          <%= f.input :location,
+            as: :multi_value, 
             input_html: { class: 'input-xlarge' }
           %>
         </div>
-        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.language.help', work_type: curation_concern.human_readable_type) %>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.location.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :cultural_context,
+            as: :multi_value, 
+            input_html: { class: 'input-xlarge' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.cultural_context.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :material,
+            as: :multi_value, 
+            input_html: { class: 'input-xlarge' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.material.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :measurements,
+            as: :multi_value, 
+            input_html: { class: 'input-xlarge' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.measurements.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :source,
+            as: :multi_value, 
+            input_html: { class: 'input-xlarge' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.source.help', work_type: curation_concern.human_readable_type) %>
       </div>
 
       <div class="row">
@@ -80,6 +139,16 @@
 
       <div class="row">
         <div class="span6">
+          <%= f.input :requires,
+            input_html: { class: 'input-xlarge' },
+            label: "Required software"
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.requires.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
           <%= f.input :note,
             as: :text,
             input_html: { class: 'input-xxxlarge' }
@@ -87,6 +156,7 @@
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.note.help', work_type: curation_concern.human_readable_type) %>
       </div>
-    </fieldset>
+
+	  </fieldset>
   </div>
 </div>

@@ -18,7 +18,6 @@ describe 'Creating an image' do
     within '#new_image' do
       fill_in "* Title", with: "readymade shabby chic paleo ethical", exact: true
       fill_in "image_creator", with: "Test image creator"
-      fill_in "* Date Created", with: "2013-10-04"
       fill_in "Description", with: "Test description"
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
       check("I have read and accept the contributor license agreement")
@@ -30,7 +29,6 @@ describe 'Creating an image' do
     click_button 'keyword-search-submit'
     within('#documents') do
       expect(page).to have_link('readymade shabby chic paleo ethical') #title
-      expect(page).to have_selector('dd', text: '2013-10-04')
       expect(page).to have_selector('dd', text: 'Test image creator')
     end
   end
