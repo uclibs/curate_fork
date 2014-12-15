@@ -33,7 +33,8 @@
 
   <%= f.input :publisher,
     as: :multi_value,
-    input_html: { class: 'input-xlarge' }
+    label: "Publisher (Required for DOI)", 
+    input_html: { class: 'input-xlarge', id: 'publisher' } 
   %>
 
   <%= f.input :language,

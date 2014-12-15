@@ -1,5 +1,5 @@
 var ready = function(){
-    $('#no-doi, #mint-doi').click(function(e){
+    $('#no-doi, #mint-doi, #not-now').click(function(e){
     var $target = $(e.target),
         $field  = $('#publisher')
                        
