@@ -47,7 +47,7 @@
         </span>
       </label>
       <label class="radio">
-        <input type="radio" name="<%= f.object_name %>[doi_assignment_strategy]" id="<%= f.object_name %>_doi_assignment_strategy_<%= CurationConcern::RemotelyIdentifiedByDoi::NOT_NOW  %>" value="<%= CurationConcern::RemotelyIdentifiedByDoi::NOT_NOW %>" <% if curation_concern.doi_assignment_strategy == CurationConcern::RemotelyIdentifiedByDoi::NOT_NOW %> checked="true"<% end %> />
+        <input type="radio" name="<%= f.object_name %>[doi_assignment_strategy]" id="not-now" value="<%= CurationConcern::RemotelyIdentifiedByDoi::NOT_NOW %>" <% if curation_concern.doi_assignment_strategy == CurationConcern::RemotelyIdentifiedByDoi::NOT_NOW %> checked="true"<% end %> />
         <span class="label-text">
           Not now&hellip;<em>but maybe later.</em>
         </span>
