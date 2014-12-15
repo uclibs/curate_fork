@@ -319,7 +319,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       fill_in("generic_work_creator", with: options['Creator'])
 
       if options['DOI Strategy']
-        choose("generic_work_doi_assignment_strategy_#{options['DOI Strategy']}")
+        choose("not-now")
       end
 
       if options['I Agree']
