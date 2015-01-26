@@ -9,10 +9,16 @@ FactoryGirl.define do
     date_modified { Date.today }
     visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
     before(:create) { |work, evaluator|
-      work.apply_depositor_metadata(evaluator.user.user_key)
-      work.owner = evaluator.user.user_key
-      work.contributor << "Some Body"
-      work.creator << "The Creator"
+      unless work.depositor.present?
+        work.apply_depositor_metadata(evaluator.user.user_key)
+        work.owner = evaluator.user.user_key
+        work.contributor << "Some Body"
+        work.creator << "The Creator"
+      else
+        work.owner = evaluator.user.user_key
+        work.contributor << "Some Body"
+        work.creator << "The Creator"		
+      end
     }
 
     factory :private_generic_work do

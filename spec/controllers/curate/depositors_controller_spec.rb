@@ -26,8 +26,13 @@ describe Curate::DepositorsController do
       before do
         person.user.can_receive_deposits_from << grantee.user
       end
+     
       it "should be successful" do
         expect { delete :destroy, person_id: person.id, id: grantee.id, format: 'json' }.to change{ Curate::ProxyDepositRights.count }.by(-1)
+      end
+
+      it 'should start a background worker' do
+        DelegateEditorCleanupWorker.any_instance.stub(:run).and_return(true)
       end
     end
   end
