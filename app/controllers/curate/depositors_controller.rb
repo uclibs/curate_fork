@@ -28,14 +28,22 @@ class Curate::DepositorsController < ApplicationController
 
   def destroy
     grantor = Person.find(params[:person_id])
+    grantee = Person.find(params[:id])
     authorize! :edit, grantor
-    grantor.user.can_receive_deposits_from.delete(Person.find(params[:id]).user)
+    grantor.user.can_receive_deposits_from.delete(grantee.user)
+
+    Sufia.queue.push(DelegateEditorCleanupWorker.new(pids_for_grantee_grantor))    
+
     respond_to do |format|
       format.json { head :no_content }
-    end
+    end    
   end
 
   protected
+
+  def pids_for_grantee_grantor
+    {grantor: params[:person_id], grantee: params[:id]}
+  end	
 
   def load_grantor
     @grantor = Person.find(params[:person_id])
