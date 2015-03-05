@@ -1,0 +1,245 @@
+[33mcommit a8f6c2ee81c08b2d1302f9f875082d707a4c4cd9[m
+Author: Lukas Miciunas <miciunla@mail.uc.edu>
+Date:   Wed Mar 4 09:31:21 2015 -0500
+
+    Query out people that don't have edit access to at least one work
+
+[33mcommit b8b636584bff945247c828561d3d9a1da096fdb2[m
+Merge: f51b821 a318159
+Author: Glen Horton <glen.horton@gmail.com>
+Date:   Wed Jan 28 16:39:03 2015 -0500
+
+    Merge pull request #28 from uclibs/feature/156_display_all_meta
+    
+    Feature/156 display all meta
+
+[33mcommit a318159eb777dccf5dadeb93c91d65a9cc51df79[m
+Author: Patrick Burke <burkepk@uc.edu>
+Date:   Wed Jan 28 10:38:04 2015 -0500
+
+    Update creator/author
+    
+    Add "(s)" to creator/author to show the possibility of multiples.
+
+[33mcommit 46359e1a35e3294bf694b7272f4274902365c795[m
+Author: Patrick Burke <burkepk@uc.edu>
+Date:   Wed Jan 28 10:01:48 2015 -0500
+
+    Fix captions
+    
+    Update the captions to the appropriate wording.
+
+[33mcommit 562b7d6aedba738809b51b7e6cd2fa88273484d4[m
+Author: Patrick Burke <burkepk@uc.edu>
+Date:   Tue Jan 27 14:48:41 2015 -0500
+
+    Remove Duplicate code
+    
+    Location was duplicated in the page, this removes the second instance.
+
+[33mcommit 41261896b9ac85044879dd1ce985550b385580a9[m
+Author: Patrick Burke <burkepk@uc.edu>
+Date:   Tue Jan 27 09:45:25 2015 -0500
+
+    Updated the _attributes.html.erb files for each type to show all of the necessary metadata.  Fixed a close span tag in the Generic File Edit page.
+
+[33mcommit f51b8214ad67068cdd3451b538057df8f4ccbe69[m
+Merge: 48bbb1b b5146c2
+Author: Glen Horton <glen.horton@gmail.com>
+Date:   Mon Dec 15 18:03:06 2014 -0500
+
+    Merge pull request #27 from uclibs/feature/#207
+    
+    Remove duplicate and incorrect declaration of Document description
+
+[33mcommit 48bbb1b426c10158c7071cb26f00062ac57adde1[m
+Merge: 4989ae1 f2ed3a7
+Author: Glen Horton <glen.horton@gmail.com>
+Date:   Mon Dec 15 17:03:24 2014 -0500
+
+    Merge pull request #26 from uclibs/feature/149_publisher_validator
+    
+    Fixes forms, test, and generic_work implementation of DOI / Publisher
+
+[33mcommit b5146c22c879afca587083827dd989892272cab9[m
+Author: James Van Mil <james.vanmil@gmail.com>
+Date:   Mon Dec 15 13:10:56 2014 -0500
+
+    Remove duplicate and incorrect declaration of Document description
+
+[33mcommit f2ed3a7f8ff2a45037538d32fefa1e751d3dc7b7[m
+Author: Thomas Scherz <thomas.scherz@uc.edu>
+Date:   Mon Dec 15 10:54:33 2014 -0500
+
+    Fixes forms, test, and generic_work implementation of DOI / Publisher
+
+[33mcommit 4989ae1a1526e9b89516264f6c7030d10cb4aedc[m
+Merge: a0d4653 6c12096
+Author: thomas <thomas.scherz@uc.edu>
+Date:   Mon Dec 15 15:51:48 2014 -0500
+
+    Merge pull request #24 from uclibs/feature/#162-hailstorm-cross-site-warning
+    
+    Feature/#162 hailstorm cross site warning
+
+[33mcommit 6c120965b22411ff80af87f10733fd8a0375d962[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Mon Dec 15 12:54:16 2014 -0500
+
+    Pin jetty to version 7
+
+[33mcommit a0d46530dbde3684aee44593b2ee960881a5f4f6[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Mon Dec 15 09:48:08 2014 -0500
+
+    Update .travis.yml to fix ClamAV install errors
+
+[33mcommit fdb823ba929e73c62f341b6eafd1e4e8fcc7087e[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Fri Dec 12 12:01:21 2014 -0500
+
+    Add test for params_helper
+
+[33mcommit 8d14304fe14c84a812c77f8fad84f231a4d3e348[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Wed Dec 3 13:23:23 2014 -0500
+
+    Add scrub_params method to all needed views and add comments
+
+[33mcommit d8cb6ee50501b0c6011096c42289964663b57548[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Tue Dec 2 13:35:41 2014 -0500
+
+    Add scrub_params to all needed views
+
+[33mcommit 34280e24147ecdb1220b1453719c8910f7028f00[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Mon Dec 1 18:13:30 2014 -0500
+
+    Scrub all unknown values from params
+
+[33mcommit d4cd71a17d144df4db83c49c2e5a268705ce8021[m
+Merge: 841f916 c5649d0
+Author: thomas <thomas.scherz@uc.edu>
+Date:   Tue Nov 25 15:47:35 2014 -0500
+
+    Merge pull request #23 from uclibs/feature/124_html5_validation
+    
+    Changes made to HTML code to clear validation errors.
+
+[33mcommit c5649d0d75078dd86ce32890c59d3514d22017a5[m
+Author: Patrick Burke <burkepk@uc.edu>
+Date:   Tue Nov 25 12:17:54 2014 -0500
+
+    Changes made to HTML code to clear validation errors.
+    
+    <file name>: <changes>
+    _title_bar: changed nav to div in order to use role="menu" and keep sub vie roles in place
+    _header: removed group tag (not needed) and " clear='all' " attribute from br tag (not allowed)
+    _document_list: changed aria-labeled-by to aria-label pr HTML5 validation
+
+[33mcommit 841f916a08680a722c01307067498cb0f6949981[m
+Merge: eae5478 b865e92
+Author: thomas <thomas.scherz@uc.edu>
+Date:   Mon Nov 24 12:49:55 2014 -0500
+
+    Merge pull request #22 from uclibs/access_permissions/#161
+    
+    Adapt ND changes for access permissions
+
+[33mcommit b865e927e2c4bbaf0fd0b9d41a6030a440556579[m
+Author: James Van Mil <james.vanmil@gmail.com>
+Date:   Fri Nov 14 15:39:41 2014 -0500
+
+    Adapt ND changes for access permissions (see their commit ndlibs/curate
+    fa0ca0f5b2ccde79efd9d251404a52f16ab3bd39 as a reference)
+
+[33mcommit eae547836af43f040c64a2a7d71df5cf939f97b8[m
+Merge: a453fa8 fb5b284
+Author: James Van Mil <vanmiljf@ucmail.uc.edu>
+Date:   Fri Nov 21 08:45:18 2014 -0500
+
+    Merge pull request #21 from uclibs/feature/pin-mini-magick
+    
+    Pin mini_magick to version < 4.0 to fix failing tests
+
+[33mcommit fb5b28461a7686e860536391440cbfdd135c1608[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Thu Nov 20 12:41:57 2014 -0500
+
+    Pin mini_magick to version < 4.0 to fix failing tests
+
+[33mcommit a453fa80530a475da215333b79604f9fcdec99ff[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Thu Oct 23 15:14:55 2014 -0400
+
+    Remove "A PDF is preferred" from datasets and generic works forms
+    
+    Articles and documents inherit from generic works.  So I had to include
+    partials for articles and documents even though they did not change.
+
+[33mcommit 6667cdc0a002eaf01f721aff0c120d7d885f631e[m
+Author: Thomas Scherz <thomas.scherz@uc.edu>
+Date:   Thu Oct 23 15:12:05 2014 -0400
+
+    Adjusts collection view page for the primary use of creator rather than contributor.
+
+[33mcommit 340b4fec233da14e5d8946b05f6f31842323ceab[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Wed Oct 22 17:48:21 2014 -0400
+
+    Set Clear Limits button to return user to /catalog
+
+[33mcommit 2c7a83f4786db533e2d5f15267452299d1d6b828[m
+Author: Glen Horton <hortongn@ucmail.uc.edu>
+Date:   Fri Oct 17 15:13:33 2014 -0400
+
+    Only show add to collection button when logged in
+
+[33mcommit 1d132f7f346c6bc33101c5e8a1ad69302ac2bad9[m
+Author: Thomas Scherz <thomas.scherz@uc.edu>
+Date:   Thu Oct 2 12:24:48 2014 -0400
+
+    Fixes the User Cancel Account routing problem.
+    
+    DEFECT - Routing Error when deactivating a user account
+    https://jira.duraspace.org/browse/HYDRASIR-367
+
+[33mcommit f8bcb07e7b441cdfb28a48b2bdd1c25c1b2d4b0d[m
+Author: Glen Horton <glen.horton@gmail.com>
+Date:   Thu Oct 9 11:53:04 2014 -0400
+
+    Remove partial for default Google Analytics
+
+[33mcommit f6d96386a290b1ed02af7c26933dcfa68b97dd15[m
+Merge: f074d80 8ff0e34
+Author: Glen Horton <glen.horton@gmail.com>
+Date:   Thu Sep 25 16:06:07 2014 -0400
+
+    Merge pull request #14 from uclibs/metadata/#53
+    
+    Metadata/#53
+
+[33mcommit 8ff0e344f628697eb28241d61f95bdae327b047c[m
+Author: Thomas Scherz <thomas.scherz@uc.edu>
+Date:   Thu Sep 25 14:59:39 2014 -0400
+
+    Removes dc_metadata from work spec generator.
+
+[33mcommit 556ad4e413c5e9b49b54b8071a07fb31c62f6883[m
+Merge: e7751ae 5ca36cf
+Author: Thomas Scherz <thomas.scherz@uc.edu>
+Date:   Thu Sep 25 14:11:55 2014 -0400
+
+    Merge branch 'metadata/#53' of github.com:uclibs/curate_fork into metadata/#53
+
+[33mcommit 5ca36cf659736c4d1b19725cb87e11f53e4d6918[m
+Merge: 56036f6 86fb0bd
+Author: thomas <thomas.scherz@uc.edu>
+Date:   Thu Sep 25 14:11:40 2014 -0400
+
+    Merge pull request #13 from uclibs/generator_fix/#53
+    
+    Update generators templates with GenericWork
+
+[33mcommit e7751ae67e2f46dd1be9debd
