@@ -396,6 +396,8 @@ class CatalogController < ApplicationController
       end
     end
 
+    #Excludes people without edit access to at least one work
+    #Applies to all searches
     def show_only_editors(solr_parameters, user_parameters)
         solr_parameters[:fq] ||= []
         solr_parameters[:fq] << "-(-is_editor_of_ssim:[* TO *] OR has_model_ssim:\"info:fedora/afmodel:Person\")"
