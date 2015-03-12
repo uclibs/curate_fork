@@ -30,9 +30,6 @@ class Document < ActiveFedora::Base
       'White Paper' ]
   end
 
-  class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any non-text-based document (other than a dataset or image)."
-
   attribute :alternate_title,
     datastream: :descMetadata, multiple: true
 
