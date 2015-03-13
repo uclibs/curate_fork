@@ -34,7 +34,7 @@ describe 'Proxy Deposit' do
       fill_in "Title", with: "My article"
       fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
       choose('Visible to the world.')
-      check("I have read and accept the contributor license agreement")
+      check("I have read and accept the distribution license agreement")
       click_button("Create Article")
       expect(page).to have_selector('#article_owner', text: user.name)
     end
@@ -51,7 +51,7 @@ describe 'Proxy Deposit' do
       fill_in "Title", with: "My article"
       fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
       choose('Visible to the world.')
-      check("I have read and accept the contributor license agreement")
+      check("I have read and accept the distribution license agreement")
       click_button("Create Article")
     end
 

@@ -42,7 +42,6 @@ class Article < ActiveFedora::Base
     validates: { multi_value_presence: { message: "Your article must have an author." } }
 
   attribute :date_created,
-    default: Date.today.to_s("%Y-%m-%d"),
     datastream: :descMetadata, multiple: false
 
   attribute :date_modified, 
@@ -63,7 +62,6 @@ class Article < ActiveFedora::Base
     datastream: :descMetadata, multiple: false
 
   attribute :language,
-    default: ['English'],
     datastream: :descMetadata, multiple: true
 
   attribute :note,

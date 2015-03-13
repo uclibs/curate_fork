@@ -323,14 +323,14 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       end
 
       if options['I Agree']
-        check("I have read and accept the contributor license agreement")
+        check("I have read and accept the distribution license agreement")
       end
       click_on(options["Button to click"])
     end
 
     unless options["I Agree"]
       within('.alert.error') do
-        page.should have_content('You must accept the contributor agreement')
+        page.should have_content('You must accept the distribution agreement')
       end
     end
   end

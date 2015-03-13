@@ -71,7 +71,7 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
       self.new
       respond_with([:curation_concern, curation_concern]) do |wants|
         wants.html {
-          flash.now[:error] = "You must accept the contributor agreement"
+          flash.now[:error] = "You must accept the distribution agreement"
           render 'new', status: :conflict
         }
       end

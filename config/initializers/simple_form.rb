@@ -13,7 +13,7 @@ SimpleForm.setup do |config|
     b.use :placeholder
     b.wrapper :tag => 'span', :class => 'control-label' do |bb|
       bb.use :label
-      bb.use :hint,  :wrap_with => { :tag => 'span', :class => 'help-inline' }
+      bb.use :hint,  :wrap_with => { :tag => 'span', :class => 'help-inline', :style => 'text-align: right' }
     end
     b.wrapper :tag => 'div', :class => 'controls' do |ba|
       ba.use :input

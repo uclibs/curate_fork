@@ -32,7 +32,6 @@ class Dataset < ActiveFedora::Base
     datastream: :descMetadata, multiple: true
 
   attribute :date_created,
-    default: Date.today.to_s("%Y-%m-%d"),
     datastream: :descMetadata, multiple: false
 
   attribute :creator,
@@ -52,7 +51,6 @@ class Dataset < ActiveFedora::Base
     editable: false
 
   attribute :language,
-    default: ['English'],
     datastream: :descMetadata, multiple: true
 
   attribute :note,
