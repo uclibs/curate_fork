@@ -20,7 +20,7 @@ describe 'Creating an image' do
       fill_in "image_creator", with: "Test image creator"
       fill_in "Description", with: "Test description"
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
-      check("I have read and accept the contributor license agreement")
+      check("I have read and accept the distribution license agreement")
       click_button("Create Image")
     end
 

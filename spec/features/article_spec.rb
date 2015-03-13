@@ -22,7 +22,7 @@ describe 'Creating a article' do
         fill_in "article_creator", with: "Test article creator"
         fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
-        check("I have read and accept the contributor license agreement")
+        check("I have read and accept the distribution license agreement")
         click_button("Create Article")
       end
       expect(page).to have_selector('h1', text: 'Article')
