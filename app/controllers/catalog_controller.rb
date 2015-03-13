@@ -21,6 +21,7 @@ class CatalogController < ApplicationController
   # This filters out objects that you want to exclude from search results, like FileAssets
   CatalogController.solr_search_params_logic += [:exclude_unwanted_models]
   CatalogController.solr_search_params_logic += [:show_only_works]
+  CatalogController.solr_search_params_logic += [:show_only_editors]
   before_filter :agreed_to_terms_of_service!
 
   skip_before_filter :default_html_head
@@ -393,6 +394,13 @@ class CatalogController < ApplicationController
         solr_parameters[:fq] << "-has_model_ssim:\"info:fedora/afmodel:Collection\""
         solr_parameters[:fq] << "-has_model_ssim:\"info:fedora/afmodel:Person\""
       end
+    end
+
+    #Excludes people without edit access to at least one work
+    #Applies to all searches
+    def show_only_editors(solr_parameters, user_parameters)
+        solr_parameters[:fq] ||= []
+        solr_parameters[:fq] << "-(-is_editor_of_ssim:[* TO *] OR has_model_ssim:\"info:fedora/afmodel:Person\")"
     end
 
     def depositor

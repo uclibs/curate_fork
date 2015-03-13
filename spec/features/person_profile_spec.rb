@@ -43,12 +43,28 @@ describe 'Profile for a Person: ' do
     before do
       FactoryGirl.create(:account, name: 'Marguerite Scypion' )
     end
-    it 'is displayed in the results' do
+    it 'without edit access is not displayed in the results' do
       visit catalog_index_path
       fill_in 'Search Curate', with: 'Marguerite'
       click_button 'keyword-search-submit'
       within('#documents') do
-        expect(page).to have_link('Marguerite Scypion') #title
+        expect(page).to_not have_link('Marguerite Scypion') #title
+      end
+    end
+  end
+
+  context "searching" do
+    let!(:account) { FactoryGirl.create(:account, name: 'The Hulk') }
+    let!(:user) { account.user }
+    let!(:person) { account.person }
+    before { login_as(user) }
+    it 'with edit access is displayed in the results' do
+      create_work
+      visit catalog_index_path
+      fill_in 'Search Curate', with: 'Hulk'
+      click_button 'keyword-search-submit'
+      within('#documents') do
+        expect(page).to have_link('The Hulk') #title
       end
     end
   end
@@ -87,4 +103,19 @@ describe 'Profile for a Person: ' do
       click_button "Update Account"
     end
   end
+
+  protected
+
+  def create_work
+    visit("/")
+    click_link "add-content"
+    classify_what_you_are_uploading 'Generic Work'
+    within '#new_generic_work' do
+      fill_in "* Title", with: "test work"
+      select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
+      check("I have read and accept the contributor license agreement")
+      click_button("Create Generic work")
+    end
+  end
+
 end
