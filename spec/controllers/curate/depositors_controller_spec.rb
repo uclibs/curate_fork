@@ -7,6 +7,7 @@ describe Curate::DepositorsController do
   describe "as a logged in user" do
     before do
       sign_in person.user
+      Curate::DepositorsController#pids_for_delegate_assign.any_instance.stub(:person, :grantee)
     end
 
     describe "create" do
@@ -18,7 +19,11 @@ describe Curate::DepositorsController do
       it "should not add current user" do
         expect { post :create, person_id: person.id, grantee_id: person.id, format: 'json' }.to change{ Curate::ProxyDepositRights.count }.by(0)
         response.should be_success
-        response.body.should == "{}"
+        expect(response.body).to eq "{\"status\":\"ERROR\",\"code\":500}"
+      end
+
+      it 'should start a background worker' do
+        DelegateEditorAssignWorker.any_instance.stub(:run).and_return(true)
       end
 
     end
