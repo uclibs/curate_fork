@@ -15,15 +15,17 @@ class Curate::DepositorsController < ApplicationController
       grantor = Person.find(params[:person_id])
       authorize! :edit, grantor
       grantee = Person.find(params[:grantee_id])
+
       unless grantor.user.can_receive_deposits_from.include? (grantee.user)
         grantor.user.can_receive_deposits_from << grantee.user
         response = {name: grantee.name, delete_path: person_depositor_path(grantor, grantee) }
+        Sufia.queue.push(DelegateEditorAssignWorker.new(pids_for_delegate_assign))
+      end
+
+      respond_to do |format|
+        format.json { render json: response}
       end
     end
-    respond_to do |format|
-      format.json { render json: response}
-    end
-
   end
 
   def destroy
@@ -44,6 +46,10 @@ class Curate::DepositorsController < ApplicationController
   def pids_for_grantee_grantor
     {grantor: params[:person_id], grantee: params[:id]}
   end	
+  
+  def pids_for_delegate_assign
+    {grantor: params[:person_id], grantee: params[:grantee_id]}
+  end
 
   def load_grantor
     @grantor = Person.find(params[:person_id])
