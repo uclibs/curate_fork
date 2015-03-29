@@ -80,7 +80,7 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
     map.source(in: RDF::Image)
 
     map.subject(in: RDF::DC) do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :facetable
     end
 
     map.title(in: RDF::DC) do |index|
