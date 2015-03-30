@@ -35,6 +35,7 @@ module CurationConcern
       apply_depositor_metadata
       apply_owner_metadata
       apply_deposit_date
+      apply_delegates_as_editor
     end
 
     def apply_update_data_to_curation_concern
@@ -54,20 +55,11 @@ module CurationConcern
       curation_concern.apply_doi_assignment_strategy do |*|
         curation_concern.save
       end
-      apply_access_permissions
-    end
-
-    def apply_access_permissions
-      Sufia.queue.push(AccessPermissionsCopyWorker.new(pid_for_object_to_copy_permissions_from))
     end
 
     def apply_save_data_to_curation_concern
       curation_concern.attributes = attributes
       curation_concern.date_modified = Date.today
-    end
-
-    def pid_for_object_to_copy_permissions_from
-      curation_concern.pid
     end
 
     def attach_file(generic_file, file_to_attach)
@@ -81,10 +73,18 @@ module CurationConcern
     # Grants edit access to the owner.
     # This also deletes the owner key from the attributes so that it isn't
     # set again later when apply_save_data_to_curation_concern is called.
+
     def apply_owner_metadata
       owner = owner_from_attributes || user
       curation_concern.edit_users += [owner.user_key]
       curation_concern.owner = owner.user_key
+    end
+
+    def apply_delegates_as_editor
+      owner = owner_from_attributes || user
+      user.can_receive_deposits_from.each do |delegate|
+        curation_concern.edit_users += [delegate.user_key]        
+      end
     end
 
     def owner_from_attributes

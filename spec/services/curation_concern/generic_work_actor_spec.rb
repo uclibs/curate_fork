@@ -64,6 +64,17 @@ describe CurationConcern::GenericWorkActor do
             expect(generic_file).to be_authenticated_only_access
           end
         end
+
+        describe 'AccessPermissionsCopyWorker' do
+          describe "#new" do
+            it "should accept ( :pid_for_object_to_copy_permissions_from ) as a parameter" do
+              expect { AccessPermissionsCopyWorker.new( :pid_for_object_to_copy_permissions_from ) }.to_not raise_error
+            end
+            it "should not accept ( :foo, :bar ) as parameters" do
+              expect { AccessPermissionsCopyWorker.new( :foo, :bar ) }.to raise_error
+            end
+          end
+        end
       end
 
       describe 'with multiple files file' do
@@ -87,7 +98,18 @@ describe CurationConcern::GenericWorkActor do
             expect(curation_concern).to be_authenticated_only_access
           end
         end
-      end
+  
+        describe 'AccessPermissionsCopyWorker' do
+          describe "#new" do
+            it "should accept ( :pid_for_object_to_copy_permissions_from ) as a parameter" do
+              expect { AccessPermissionsCopyWorker.new( :pid_for_object_to_copy_permissions_from ) }.to_not raise_error
+            end
+            it "should not accept ( :foo, :bar ) as parameters" do
+              expect { AccessPermissionsCopyWorker.new( :foo, :bar ) }.to raise_error
+            end
+          end
+        end
+      end    
 
       describe 'with linked resources' do
         let(:attributes) {
@@ -108,6 +130,17 @@ describe CurationConcern::GenericWorkActor do
             link = curation_concern.linked_resources.first
             expect(link.url).to eq 'http://www.youtube.com/watch?v=oHg5SJYRHA0'
             expect(curation_concern).to be_authenticated_only_access
+          end
+        end
+   
+         describe 'AccessPermissionsCopyWorker' do
+          describe "#new" do
+            it "should accept ( :pid_for_object_to_copy_permissions_from ) as a parameter" do
+              expect { AccessPermissionsCopyWorker.new( :pid_for_object_to_copy_permissions_from ) }.to_not raise_error
+            end
+            it "should not accept ( :foo, :bar ) as parameters" do
+              expect { AccessPermissionsCopyWorker.new( :foo, :bar ) }.to raise_error
+            end
           end
         end
       end
@@ -135,8 +168,18 @@ describe CurationConcern::GenericWorkActor do
             expect(curation_concern).to be_authenticated_only_access
           end
         end
-      end
 
+         describe 'AccessPermissionsCopyWorker' do
+          describe "#new" do
+            it "should accept ( :pid_for_object_to_copy_permissions_from ) as a parameter" do
+              expect { AccessPermissionsCopyWorker.new( :pid_for_object_to_copy_permissions_from ) }.to_not raise_error
+            end
+            it "should not accept ( :foo, :bar ) as parameters" do
+              expect { AccessPermissionsCopyWorker.new( :foo, :bar ) }.to raise_error
+            end
+          end
+        end
+      end
     end
 
     describe '#update' do

@@ -35,6 +35,7 @@ describe CurationConcern::BaseActor do
         expect(curation_concern.depositor).to eq user.user_key
         expect(curation_concern.owner).to eq user.user_key
       end
+
     end
     context 'depositing on behalf of someone you have proxy access for' do
       subject {
@@ -60,12 +61,14 @@ describe CurationConcern::BaseActor do
     before do
       subject.stub(:apply_creation_data_to_curation_concern)
       subject.stub(:apply_save_data_to_curation_concern)
+      subject.stub(:apply_delegates_as_editor)
     end
 
     describe 'success' do
       it 'returns true' do
         subject.stub(:assign_remote_identifier_if_applicable).and_return(true)
         subject.stub(:apply_access_permissions).and_return(true)
+        subject.stub(:apply_delegates_as_editor).and_return(true)
         subject.create.should be_true
       end
     end
