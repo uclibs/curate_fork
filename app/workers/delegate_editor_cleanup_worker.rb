@@ -24,14 +24,12 @@ class DelegateEditorCleanupWorker
   end
 
   def run
-
      grantor = ActiveFedora::Base.find(@grantor_pid, cast: true)
      grantee = ActiveFedora::Base.find(@grantee_pid, cast: true)
-
      type = [Article, Dataset, Document, GenericWork, Image]
      type.each do |klass|
-       klass.find_each('depositor' => grantee.email) do |work|
-           next unless work.owner == grantor.email
+       klass.find_each('edit_access_person_ssim' => grantee.email) do |work|
+          next unless work.owner == grantor.email
            work.edit_users -= [grantee.email]
            work.editor_ids += [grantor.pid]
            work.editor_ids -= [grantee.pid]
@@ -46,8 +44,8 @@ class DelegateEditorCleanupWorker
              file.edit_groups = work.edit_groups
              file.save!
              end    
-          end
-       end
+           end
+         end
      end
   end
 end

@@ -33,9 +33,9 @@ class DelegateEditorAssignWorker
        klass.find_each('edit_access_person_ssim' => grantor.email) do |work|
            work.edit_users += [grantee.email]
            work.save!
-#           grantee = ActiveFedora::Base.find(grantee.pid, cast: true)
-#           grantee.work_ids += [work.pid]
-#           grantee.save!
+           grantee = ActiveFedora::Base.find(grantee.pid, cast: true)
+           grantee.work_ids += [work.pid]
+           grantee.save!
 
            if work.respond_to?(:generic_files)
 	     work.generic_files.each do |file|
