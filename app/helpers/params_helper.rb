@@ -12,6 +12,7 @@ module ParamsHelper
       safe_params["f"]["desc_metadata__creator_sim"] = params["f"]["desc_metadata__creator_sim"]
       safe_params["f"]["desc_metadata__language_sim"] = params["f"]["desc_metadata__language_sim"]
       safe_params["f"]["desc_metadata__publisher_sim"] = params["f"]["desc_metadata__publisher_sim"]
+      safe_params["f"]["desc_metadata__subject_sim"] = params["f"]["desc_metadata__subject_sim"]
       safe_params["f"]["generic_type_sim"] = params["f"]["generic_type_sim"]
       safe_params["f"]["human_readable_type_sim"] = params["f"]["human_readable_type_sim"]
     end
@@ -27,6 +28,7 @@ module ParamsHelper
       params["f"]["desc_metadata__creator_sim"] = safe_params["f"]["desc_metadata__creator_sim"] unless safe_params["f"]["desc_metadata__creator_sim"].nil?
       params["f"]["desc_metadata__language_sim"] = safe_params["f"]["desc_metadata__language_sim"] unless safe_params["f"]["desc_metadata__language_sim"].nil?
       params["f"]["desc_metadata__publisher_sim"] = safe_params["f"]["desc_metadata__publisher_sim"] unless safe_params["f"]["desc_metadata__publisher_sim"].nil?
+      params["f"]["desc_metadata__subject_sim"] = safe_params["f"]["desc_metadata__subject_sim"] unless safe_params["f"]["desc_metadata__subject_sim"].nil?
       params["f"]["generic_type_sim"] = safe_params["f"]["generic_type_sim"] unless safe_params["f"]["generic_type_sim"].nil?
       params["f"]["human_readable_type_sim"] = safe_params["f"]["human_readable_type_sim"] unless safe_params["f"]["human_readable_type_sim"].nil?
     end
