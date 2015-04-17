@@ -13,12 +13,12 @@ describe EmbargoWorker do
       Timecop.travel(new_time) do
         load File.expand_path("../../../lib/tasks/embargo_manager.rake", __FILE__)
         Rake::Task.define_task(:environment)
-    	Rake::Task['embargomanager:release'].invoke
-
+    	  Rake::Task['embargomanager:release'].invoke
+    	  
         new_pid = work.pid
         work = ActiveFedora::Base.find(new_pid, cast: true)
 
-    	work.visibility.should == 'open'
+    	  work.visibility.should == 'open'
         Timecop.return
       end
     end
