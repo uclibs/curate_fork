@@ -1,4 +1,4 @@
-class DelegateEditorCleanupWorker
+class DelegateEditorAssignWorker
   class GrantError < RuntimeError
 
     def initialize(url_string)
@@ -7,7 +7,7 @@ class DelegateEditorCleanupWorker
   end
 
   def queue_name
-    :de_delegate
+    :assign_delegate
   end
 
   attr_accessor :pids, :grantor, :grantee, :grantor_pid, :grantee_pid
@@ -24,28 +24,27 @@ class DelegateEditorCleanupWorker
   end
 
   def run
+
      grantor = ActiveFedora::Base.find(@grantor_pid, cast: true)
      grantee = ActiveFedora::Base.find(@grantee_pid, cast: true)
+
      type = [Article, Dataset, Document, GenericWork, Image]
      type.each do |klass|
-       klass.find_each('edit_access_person_ssim' => grantee.email) do |work|
-          next unless work.owner == grantor.email
-           work.edit_users -= [grantee.email]
-           work.editor_ids += [grantor.pid]
-           work.editor_ids -= [grantee.pid]
+       klass.find_each('edit_access_person_ssim' => grantor.email) do |work|
+           work.edit_users += [grantee.email]
            work.save!
            grantee = ActiveFedora::Base.find(grantee.pid, cast: true)
-           grantee.work_ids -= [work.pid]
+           grantee.work_ids += [work.pid]
            grantee.save!
 
            if work.respond_to?(:generic_files)
 	     work.generic_files.each do |file|
-             file.edit_users = work.edit_users
-             file.edit_groups = work.edit_groups
-             file.save!
+               file.edit_users = work.edit_users
+               file.edit_groups = work.edit_groups
+               file.save!
              end    
            end
-         end
+       end
      end
   end
 end

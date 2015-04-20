@@ -31,11 +31,11 @@ module Hydramata::SolrHelper
         }
 
         if group_query.present?
-          embargo_query = "(*:* NOT embargo_release_date_dtsi:[NOW TO *]) OR (embargo_release_date_dtsi:[NOW TO *] AND (#{group_query})) OR (embargo_release_date_dtsi:[NOW TO *] AND depositor_tesim:#{current_user.email})"
+          embargo_query = "(*:* NOT embargo_release_date_dtsi:[NOW TO *]) OR (embargo_release_date_dtsi:[NOW TO *] AND (#{group_query})) OR (embargo_release_date_dtsi:[NOW TO *] AND edit_access_person_ssim:#{current_user.email})"
 
         # User doesn't have groups to query
         else
-          embargo_query = "(*:* NOT embargo_release_date_dtsi:[NOW TO *]) OR (embargo_release_date_dtsi:[NOW TO *] AND depositor_tesim:#{current_user.email})"
+          embargo_query = "(*:* NOT embargo_release_date_dtsi:[NOW TO *]) OR (embargo_release_date_dtsi:[NOW TO *] AND edit_access_person_ssim:#{current_user.email})"
 
         end
       end

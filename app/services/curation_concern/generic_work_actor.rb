@@ -8,7 +8,8 @@ module CurationConcern
       assign_pid && super && attach_files && create_linked_resources &&
         download_create_cloud_resources && assign_representative &&
         add_depositor_as_editor &&
-        add_or_update_editors_and_groups(editors, groups, :create)
+        add_or_update_editors_and_groups(editors, groups, :create) &&
+        apply_access_permissions
     end
 
     def update
@@ -16,12 +17,21 @@ module CurationConcern
       groups = attributes.delete('editor_groups_attributes')
       add_or_update_editors_and_groups(editors, groups, :update) &&
         add_to_collections(attributes.delete(:collection_ids)) &&
-        super && attach_files && create_linked_resources
+        super && attach_files && create_linked_resources && 
+        apply_access_permissions
     end
 
     delegate :visibility_changed?, to: :curation_concern
 
     protected
+
+    def apply_access_permissions
+      Sufia.queue.push(AccessPermissionsCopyWorker.new(pid_for_object_to_copy_permissions_from))
+    end
+
+    def pid_for_object_to_copy_permissions_from
+      curation_concern.pid
+    end
 
     def assign_pid
       curation_concern.inner_object.pid = CurationConcern.mint_a_pid
