@@ -52,7 +52,7 @@ describe 'user profile workflow', FeatureSupport.options do
       user.blog.should == new_blog
     end
   end
-
+=begin
   describe 'A new user who has not updated their profile yet' do
     let(:email) { 'hello@world.com' }
     let(:password) { 'my$3cur3p@$$word' }
@@ -87,7 +87,7 @@ describe 'user profile workflow', FeatureSupport.options do
       bad_login_for(email, password)
     end
   end
-
+=end
   def bad_login_for(email, password)
     logout
     visit('/')
