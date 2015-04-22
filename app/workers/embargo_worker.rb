@@ -8,9 +8,11 @@ class EmbargoWorker
 
   def initialize(pid)
     self.pid = pid
+    run
   end
 
   def run
+
     work = ActiveFedora::Base.find(pid, cast: true)
     work.embargo_release_date = Date.tomorrow
     work.save
