@@ -12,7 +12,8 @@ describe 'user profile workflow', FeatureSupport.options do
 
       visit edit_user_registration_path
 
-      new_name = 'Frodo Baggins'
+      new_first_name = 'Frodo'
+      new_last_name = 'Baggins'
       new_pref = 'pref@example.com'
       new_alt = 'alt@example.com'
       new_title = 'student'
@@ -23,7 +24,8 @@ describe 'user profile workflow', FeatureSupport.options do
 
       within('form.edit_user') do
         fill_in("user[current_password]", with: password)
-        fill_in("user[name]", with: new_name)
+        fill_in("user[first_name]", with: new_first_name)
+        fill_in("user[last_name]", with: new_last_name)
         fill_in("user[email]", with: new_pref)
         fill_in("user[alternate_email]", with: new_alt)
         fill_in("user[title]", with: new_title)
@@ -42,7 +44,7 @@ describe 'user profile workflow', FeatureSupport.options do
       user.person.reload
 
       # Verify that everything got updated
-      user.name.should == new_name
+      user.name.should == "#{new_first_name} #{new_last_name}"
       user.email.should == new_pref
       user.alternate_email.should == new_alt
       user.title.should == new_title

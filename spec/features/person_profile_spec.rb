@@ -4,7 +4,7 @@ describe 'Profile for a Person: ' do
 
   context 'logged in user' do
     let(:password) { FactoryGirl.attributes_for(:user).fetch(:password) }
-    let(:account) { FactoryGirl.create(:account, name: 'Iron Man') }
+    let(:account) { FactoryGirl.create(:account, first_name: 'Iron', last_name: "Man") }
     let(:user) { account.user }
     let(:person) { account.person }
     before { login_as(user) }
@@ -19,7 +19,8 @@ describe 'Profile for a Person: ' do
       visit catalog_index_path
       click_link 'My Profile'
       click_link 'Update Personal Information'
-      expect(page).to have_field('Name', with: 'Iron Man')
+      expect(page).to have_field('First name', with: 'Iron')
+      expect(page).to have_field('Last name', with: 'Man')
     end
 
     it 'should update their name and see the updated value' do
@@ -28,7 +29,8 @@ describe 'Profile for a Person: ' do
       click_link 'Update Personal Information'
       page.should have_link("Cancel", href: person_path(person))
       within('form.edit_user') do
-        fill_in("user[name]", with: 'Spider Man')
+        fill_in("user[first_name]", with: 'Spider')
+        fill_in("user[last_name]", with: 'Man')
         fill_in("user[current_password]", with: password)
         click_button "Update Account"
       end
@@ -69,14 +71,21 @@ describe 'Profile for a Person: ' do
         expect(page).to_not have_link('Marguerite Scypion') #title
       end
     end
+  end
+
+  context "searching" do
+    let!(:account) { FactoryGirl.create(:account, first_name: 'Bruce', last_name: 'Banner') }
+    let!(:user) { account.user }
+    let!(:person) { account.person }
+    before { login_as(user) }
     it 'with edit access is displayed in the results' do
       login_as(user)
       create_work
       visit catalog_index_path
-      fill_in 'Search Curate', with: 'Hulk'
+      fill_in 'Search Curate', with: 'Bruce'
       click_button 'keyword-search-submit'
       within('#documents') do
-        expect(page).to have_link('The Hulk') #title
+        expect(page).to have_link('Bruce Banner') #title
       end
     end
     it 'should not show repository managers in search results' do
@@ -113,7 +122,7 @@ describe 'Profile for a Person: ' do
 
   context 'A person when logged in' do
     let(:password) { FactoryGirl.attributes_for(:user).fetch(:password) }
-    let(:account) { FactoryGirl.create(:account, name: 'Iron Man') }
+    let(:account) { FactoryGirl.create(:account, first_name: 'Iron', last_name: 'Man') }
     let(:user) { account.user }
     let(:person) { account.person }
     let(:image_file){ Rails.root.join('../fixtures/files/image.png') }

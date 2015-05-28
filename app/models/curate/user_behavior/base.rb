@@ -32,7 +32,15 @@ module Curate
       end
 
       def name
-        read_attribute(:name) || user_key
+        name = "#{read_attribute(:first_name)} #{read_attribute(:last_name)}" 
+        return name unless name.blank?
+        user_key
+      end
+
+      def inverted_name
+        name = "#{read_attribute(:last_name)}, #{read_attribute(:first_name)}"
+        return name unless read_attribute(:last_name).blank? or read_attribute(:first_name).blank?
+        ""
       end
 
       def groups

@@ -22,8 +22,7 @@
           <%= f.input :creator, 
                       as: :multi_value, 
                       label: 'Author',
-                      required: true, 
-                      input_html: { value: "@current_user.name" } %>
+                      required: true %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: curation_concern.human_readable_type) %>
       </div>
