@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CatalogController do
-
+  
   describe "when logged in" do
     let(:user) { FactoryGirl.create(:user) }
     let!(:work1) { FactoryGirl.create(:generic_work, user: user) }
@@ -21,7 +21,7 @@ describe CatalogController do
       it "should return just my works" do
         get 'index', works: 'mine'
         response.should be_successful
-        assigns(:document_list).map(&:id).should == [work1.id]
+          assigns(:document_list).map(&:id).should == [work1.id]
       end
     end
 
@@ -75,6 +75,5 @@ describe CatalogController do
         assigns(:document_list).map(&:id).should include(work2.id)
       end
     end
-
   end
 end
