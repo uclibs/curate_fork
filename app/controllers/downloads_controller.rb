@@ -16,6 +16,11 @@ class DownloadsController < ApplicationController
     end
   end
 
+  ## Overriding Hydra::Controller::DownloadBehavior.datastream_name to return asset.filename instead of asset.label
+  def datastream_name
+    params[:filename] || asset.filename
+  end
+
   protected
 
   def render_404
