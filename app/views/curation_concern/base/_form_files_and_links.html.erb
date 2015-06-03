@@ -19,7 +19,7 @@
         <div id="my-tab-content" class="tab-content">
           <div class="tab-pane active" id="file">
             <fieldset>
-              <%= f.input :files, as: :file, label: 'Upload a file'%>
+              <%= f.input :files, as: :file, input_html: { multiple: true }, label: 'Upload a file', hint: "Hold Shift or Command to select multiple files" %>
             </fieldset>
           </div>
 
