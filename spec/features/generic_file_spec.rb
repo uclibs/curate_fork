@@ -193,7 +193,6 @@ describe 'Downloading a generic file' do
       generic_file.reload
       visit download_path(generic_file.noid)
       page.response_headers["Content-Disposition"].should ~ /"#{generic_file.filename}"/
-      byebug
     end
   end
 
