@@ -175,3 +175,32 @@ describe 'Viewing a generic file that is private' do
   end
 end
 
+describe 'Downloading a generic file' do
+  let(:user) { FactoryGirl.create(:user) }
+  let(:image_file) { File.open(Rails.root.join('../fixtures/files/image.png')) }
+  let(:visibility) { Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC }
+  let(:generic_file) {
+    FactoryGirl.create_generic_file(:generic_work, user, curate_fixture_file_upload('files/image.png', 'image/png', false)) {|g|
+      g.visibility = visibility
+    }
+  }
+  
+  context 'with a file title' do
+    it 'should have the original filename' do
+      generic_file
+      generic_file.title = "Test title"
+      generic_file.save
+      generic_file.reload
+      visit download_path(generic_file.noid)
+      page.response_headers["Content-Disposition"].should ~ /"#{generic_file.filename}"/
+    end
+  end
+
+  context 'without a file title' do
+    it 'should have the original filename' do
+      generic_file
+      visit download_path(generic_file.noid)
+      page.response_headers["Content-Disposition"].should ~ /"#{generic_file.filename}"/
+    end
+  end
+end
