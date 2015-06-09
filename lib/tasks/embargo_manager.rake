@@ -13,11 +13,11 @@ namespace :embargomanager do
         receiver = work['depositor_tesim']
         mail_contents = work['desc_metadata__title_tesim']
         EmbargoMailer.notify_open(receiver, mail_contents).deliver
-      elseif Date.parse(work['embargo_release_date_dtsi']) == (Date.today + FOURTEEN)
+      else if Date.parse(work['embargo_release_date_dtsi']) == (Date.today + FOURTEEN)
         receiver = work['depositor_tesim']
         mail_contents = work['desc_metadata__title_tesim']
         EmbargoMailer.notify_14_days(receiver, mail_contents).deliver
-      elseif Date.parse(work['embargo_release_date_dtsi']) == (Date.today + THIRTY)
+      else if Date.parse(work['embargo_release_date_dtsi']) == (Date.today + THIRTY)
         receiver = work['depositor_tesim']
         mail_contents = work['desc_metadata__title_tesim']
         EmbargoMailer.notify_30_days(receiver, mail_contents).deliver
