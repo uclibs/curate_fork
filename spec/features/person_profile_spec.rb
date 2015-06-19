@@ -69,6 +69,26 @@ describe 'Profile for a Person: ' do
     end
   end
 
+  context "As a repository manager searching people" do
+    let(:creating_user) { FactoryGirl.create(:user) }
+    let(:email) { 'manager@example.com' }
+    let(:manager_user) { FactoryGirl.create(:user, email: email) }
+    let!(:account) { FactoryGirl.create(:account, name: 'Bob Average') }
+    let!(:user) { account.user }
+    let!(:person) { account.person }
+    before do
+      login_as(manager_user)
+    end
+    it "should see all users" do
+      visit catalog_index_path
+      fill_in 'Search Curate', with: 'Bob'
+      click_button 'keyword-search-submit'
+      within('#documents') do
+        expect(page).to have_link('Bob Average') #title
+      end
+    end
+  end
+
   context 'A person when logged in' do
     let(:password) { FactoryGirl.attributes_for(:user).fetch(:password) }
     let(:account) { FactoryGirl.create(:account, name: 'Iron Man') }
