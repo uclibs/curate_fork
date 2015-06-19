@@ -22,6 +22,7 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:exclude_unwanted_models]
   CatalogController.solr_search_params_logic += [:show_only_works]
   CatalogController.solr_search_params_logic += [:show_only_editors]
+
   before_filter :agreed_to_terms_of_service!
 
   skip_before_filter :default_html_head
@@ -399,8 +400,10 @@ class CatalogController < ApplicationController
     #Excludes people without edit access to at least one work
     #Applies to all searches
     def show_only_editors(solr_parameters, user_parameters)
+      unless current_user and current_user.manager?
         solr_parameters[:fq] ||= []
         solr_parameters[:fq] << "-(-is_editor_of_ssim:[* TO *] OR has_model_ssim:\"info:fedora/afmodel:Person\")"
+      end
     end
 
     def depositor
@@ -413,7 +416,6 @@ class CatalogController < ApplicationController
     end
 
     def exclude_class_filter(klass)
-      '-' + ActiveFedora::SolrService.construct_query_for_rel(has_model:
-                                                        klass.to_class_uri)
+      '-' + ActiveFedora::SolrService.construct_query_for_rel(has_model: klass.to_class_uri)
     end
 end
