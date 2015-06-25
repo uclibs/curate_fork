@@ -22,6 +22,7 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:exclude_unwanted_models]
   CatalogController.solr_search_params_logic += [:show_only_works]
   CatalogController.solr_search_params_logic += [:show_only_editors]
+  CatalogController.solr_search_params_logic += [:hide_managers]
 
   before_filter :agreed_to_terms_of_service!
 
@@ -403,6 +404,19 @@ class CatalogController < ApplicationController
       unless current_user and current_user.manager?
         solr_parameters[:fq] ||= []
         solr_parameters[:fq] << "-(-is_editor_of_ssim:[* TO *] OR has_model_ssim:\"info:fedora/afmodel:Person\")"
+      end
+    end
+
+    def hide_managers(solr_parameters, user_parameters)
+      unless current_user and current_user.manager?
+        solr_parameters[:fq] ||= []
+        manager_config = "#{::Rails.root}/config/manager_usernames.yml"
+        content = IO.read(manager_config)
+        list = YAML.load(ERB.new(content).result).fetch(Rails.env).fetch('manager_usernames')
+
+        list.each do |manager|
+          solr_parameters[:fq] << "-(+edit_access_person_ssim: #{manager} AND has_model_ssim:\"info:fedora/afmodel:Person\")"
+        end
       end
     end
 
