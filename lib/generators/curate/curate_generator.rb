@@ -109,7 +109,7 @@ This generator makes the following changes to your application:
   end
 
   def create_manager_usernames
-    create_file('config/manager_usernames.yml', "development:\n  manager_usernames:\n  - manager@example.com\ntest:\n  manager_usernames:\n  - manager@example.com\nproduction:\n  manager_usernames:\n  - manager@example.com\n")
+    create_file('config/manager_usernames.yml', "development:\n  manager_usernames:\n  - manager@example.com\ntest:\n  manager_usernames:\n  - manager@example.com\n  - manager2@example.com\nproduction:\n  manager_usernames:\n  - manager@example.com\n")
   end
 
   def create_clamav_initializer
