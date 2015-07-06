@@ -21,7 +21,7 @@ module ActionDispatch::Routing
       end
       resources :downloads, only: [:show]
 
-      namespace :curation_concern, path: :concern do
+      namespace :curation_concern, path: :works do
         Curate.configuration.registered_curation_concern_types.map(&:tableize).each do |container|
           resources container, except: [:index]
         end
