@@ -12,3 +12,5 @@
     <% end %>
     <%= link_to "Back to #{parent.human_readable_type}", polymorphic_path([:curation_concern, parent]), class: 'btn btn-primary' %>
   </div>
+
+<%= render 'permalink', curation_concern: curation_concern %>

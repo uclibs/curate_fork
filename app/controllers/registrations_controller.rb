@@ -65,7 +65,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def after_update_path_for(resource)
     resource.update_column(:user_does_not_require_profile_update, true)
-    super
+    user_profile_path
   end
 
   def scrub_password_parameters_for_manager!
