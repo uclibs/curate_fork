@@ -25,6 +25,7 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:hide_managers]
 
   before_filter :agreed_to_terms_of_service!
+  before_filter :check_parameters?
 
   skip_before_filter :default_html_head
 
@@ -344,6 +345,14 @@ class CatalogController < ApplicationController
     config.spell_max = 5
   end
 
+    def check_parameters?(params_to_check=[:page, :per_page])
+      params_to_check.each do |param|
+        render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[param].to_i.to_s == params[param] or params[param].nil?
+        render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[param].to_i < 1000
+      end
+      render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:q].nil? or params[:q].length < 1000
+    end
+
   protected
 
     # Override Hydra::PolicyAwareAccessControlsEnforcement
@@ -432,4 +441,6 @@ class CatalogController < ApplicationController
     def exclude_class_filter(klass)
       '-' + ActiveFedora::SolrService.construct_query_for_rel(has_model: klass.to_class_uri)
     end
+
+
 end

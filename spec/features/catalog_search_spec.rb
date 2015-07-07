@@ -5,6 +5,35 @@ if ENV['JS']
   describe_options[:js] = true
 end
 
+describe "Visit the catalog index page" do
+  context "when the per_page parameter is out of range" do
+    it "returns a custom error page" do
+      visit ('/catalog?per_page=1000')
+      expect(page).to have_content("The page you were looking for doesn't exist")
+    end
+  end
+end
+
+describe "Visit the catalog index page" do
+  context "when the page parameter is out of range" do
+    it "returns a custom error page" do
+      visit ('/catalog?page=1000')
+      expect(page).to have_content("The page you were looking for doesn't exist")
+    end
+  end
+end
+
+describe "Visit the catalog index page" do
+  context "when the q parameter is out of range" do
+    it "returns a custom error page" do
+      long_string = ""
+      250.times{long_string << "test"}
+      visit ("/catalog?q=#{long_string}")
+      expect(page).to have_content("The page you were looking for doesn't exist")
+    end
+  end
+end
+
 describe 'catalog search', describe_options do
   before do
     Rails.configuration.consider_all_requests_local = true

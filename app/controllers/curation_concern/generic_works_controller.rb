@@ -4,25 +4,25 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
   before_filter :remove_viral_files, only: [:create]
 
   def remove_viral_files
-    good_files = []
     viral_files = []
     clam = ClamAV.instance
     content = attributes_for_actor
+
     unless content.nil? or content["files"].nil?
-      temp_path = content["files"].instance_variable_get(:@tempfile).path
-      file_name = content["files"].instance_variable_get(:@original_filename)
-      scan_result = clam.scanfile(temp_path)
+      file_attributes = content["files"].collect do |file| 
+        {file_name: file.original_filename, temp_path: file.tempfile.path }
+      end
+
+      scan_result = file_attributes.collect do |file|
+        { result: clam.scanfile(file[:temp_path]), file_name: file[:file_name] }
+      end
       
-      content.each do |file|
-        if (scan_result.is_a? Fixnum)
-          good_files << file
-        else
-          viral_files << file
-        end
+      scan_result.each do |file_scan|
+        viral_files << file_scan[:file_name] unless file_scan[:result].is_a? Fixnum
       end
 
       if viral_files.any?
-        flash[:error] = "The following virus #{scan_result} was found in the file (#{file_name}) you attempted to upload.  The file was not uploaded, but the work was created."
+        flash[:error] = "A virus was detected in the file #{viral_files.first}. Your work was created, but no files were attached. Please review your files and re-attach."
         content["files"]=nil
       end    
     end

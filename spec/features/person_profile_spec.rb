@@ -37,6 +37,17 @@ describe 'Profile for a Person: ' do
       click_link 'My Profile'
       page.should have_content('Spider Man')
     end
+
+    it 'should be returned to the My Profile page after editing their profile' do
+      visit catalog_index_path
+      click_link 'My Profile'
+      click_link 'Update Personal Information'
+      within('form.edit_user') do
+        fill_in("user[current_password]", with: password)
+        click_button "Update Account"
+      end
+      page.should have_content('Update Personal Information')
+    end
   end
 
   context "searching" do
