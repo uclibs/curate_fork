@@ -32,3 +32,8 @@
 <div id="documents" class="clear">
   <%= list_items_in_collection(@collection) %>
 </div>
+
+<div class="page-link">
+  <% this_page = Curate.configuration.application_root_url + polymorphic_path(@collection) %>
+  <p>Link to this page: <%= link_to(this_page, this_page) %></p>
+</div>
