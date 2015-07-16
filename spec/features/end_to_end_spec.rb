@@ -135,7 +135,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       page.assert_selector('a', text: title)
 
       # The owner should be able to see the embargo'd object's show view
-      visit("/concern/generic_works/#{noid}")
+      visit("/works/generic_works/#{noid}")
       page.assert_no_selector('h1', text: "Unauthorized")
 
       logout
@@ -154,7 +154,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       page.assert_selector('a', text: title)
 
       # Someone in a group that has access should be able to see the embargo'd object's show view
-      visit("/concern/generic_works/#{noid}")
+      visit("/works/generic_works/#{noid}")
       page.assert_no_selector('h1', text: "Unauthorized")
 
       logout
@@ -164,7 +164,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       page.assert_no_selector('a', text: title)
 
       # An anonymous user should not be able to see the embargo'd object's show view.
-      visit("/concern/generic_works/#{noid}")
+      visit("/works/generic_works/#{noid}")
       page.assert_selector('h1', text: "Unauthorized")
       
       login_as(user)
@@ -185,7 +185,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
         page.assert_selector('a', text: title)
       
         # The owner should still be able to see the embargo'd object's show view
-        visit("/concern/generic_works/#{noid}")
+        visit("/works/generic_works/#{noid}")
         page.assert_no_selector('h1', text: "Unauthorized")   
       
         logout
@@ -197,7 +197,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
         page.assert_selector('a', text: title)
       
         # Someone in a group that has access should still be able to see the embargo'd object's show view
-        visit("/concern/generic_works/#{noid}")
+        visit("/works/generic_works/#{noid}")
         page.assert_no_selector('h1', text: "Unauthorized") 
 
         logout
@@ -207,7 +207,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
         page.assert_selector('a', text: title)
 
         # An anonymous user should now be able to see the embargo'd object's show view.
-        visit("/concern/generic_works/#{noid}")
+        visit("/works/generic_works/#{noid}")
         page.assert_no_selector('h1', text: "Unauthorized")
       end
     end

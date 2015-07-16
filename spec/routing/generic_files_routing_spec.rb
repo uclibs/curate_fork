@@ -4,9 +4,9 @@ describe 'generic files routing' do
   let(:parent_id) { '1a2b3c' }
   let(:child_id) { '1a2b3c4d5e' }
 
-  it "routes GET /concern/related_files/:id" do
+  it "routes GET /works/related_files/:id" do
     expect(
-      get: "/concern/generic_files/#{child_id}"
+      get: "/works/files/#{child_id}"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",
@@ -16,9 +16,9 @@ describe 'generic files routing' do
     )
   end
 
-  it "routes GET /concern/related_files/:id/edit" do
+  it "routes GET /works/related_files/:id/edit" do
     expect(
-      get: "/concern/generic_files/#{child_id}/edit"
+      get: "/works/files/#{child_id}/edit"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",
@@ -28,9 +28,9 @@ describe 'generic files routing' do
     )
   end
 
-  it "routes GET /concern/related_files/:id" do
+  it "routes GET /works/related_files/:id" do
     expect(
-      put: "/concern/generic_files/#{child_id}"
+      put: "/works/files/#{child_id}"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",
@@ -40,9 +40,9 @@ describe 'generic files routing' do
     )
   end
 
-  it "routes GET /concern/container/:parent_id/related_files/new" do
+  it "routes GET /works/container/:parent_id/related_files/new" do
     expect(
-      get: "/concern/container/#{parent_id}/generic_files/new"
+      get: "/works/container/#{parent_id}/files/new"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",
@@ -52,9 +52,9 @@ describe 'generic files routing' do
     )
   end
 
-  it "routes POST /concern/container/:parent_id/related_files" do
+  it "routes POST /works/container/:parent_id/related_files" do
     expect(
-      post: "/concern/container/#{parent_id}/generic_files"
+      post: "/works/container/#{parent_id}/files"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",
@@ -64,9 +64,9 @@ describe 'generic files routing' do
     )
   end
 
-  it "routes DELETE /concern/container/:parent_id/related_files" do
+  it "routes DELETE /works/container/:parent_id/related_files" do
     expect(
-      delete: "/concern/generic_files/#{child_id}"
+      delete: "/works/files/#{child_id}"
     ).to(
       route_to(
         controller: "curation_concern/generic_files",

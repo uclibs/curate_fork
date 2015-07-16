@@ -21,7 +21,7 @@ module ActionDispatch::Routing
       end
       resources :downloads, only: [:show]
 
-      namespace :curation_concern, path: :concern do
+      namespace :curation_concern, path: :works do
         Curate.configuration.registered_curation_concern_types.map(&:tableize).each do |container|
           resources container, except: [:index]
         end
@@ -33,8 +33,8 @@ module ActionDispatch::Routing
         end
         resources( :linked_resources, only: [:new, :create], path: 'container/:parent_id/linked_resources')
         resources( :linked_resources, only: [:show, :edit, :update, :destroy])
-        resources( :generic_files, only: [:new, :create], path: 'container/:parent_id/generic_files')
-        resources( :generic_files, only: [:show, :edit, :update, :destroy]) do
+        resources( :generic_files, only: [:new, :create], path: 'container/:parent_id/files')
+        resources( :generic_files, only: [:show, :edit, :update, :destroy], path: 'files') do
           member do
             get :versions
             put :rollback
