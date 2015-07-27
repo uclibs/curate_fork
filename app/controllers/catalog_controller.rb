@@ -24,7 +24,6 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:show_only_editors]
   CatalogController.solr_search_params_logic += [:hide_managers]
 
-  before_filter :agreed_to_terms_of_service!
   before_filter :check_parameters?
 
   skip_before_filter :default_html_head

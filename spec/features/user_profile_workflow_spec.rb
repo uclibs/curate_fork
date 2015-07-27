@@ -62,7 +62,7 @@ describe 'user profile workflow', FeatureSupport.options do
       visit new_user_registration_path
       sign_up_new_user(email, password)
 
-      agree_to_tos
+      skip_welcome_page
       assert_user_has_not_updated_their_profile_yet(email)
 
       assert_logout_link_is_visible
@@ -114,7 +114,7 @@ describe 'user profile workflow', FeatureSupport.options do
 
     click_link("Sign up")
     sign_up_new_user(email, password)
-    agree_to_tos
+    skip_welcome_page
 
     within('form.edit_user') do
       fill_in("user[email]", with: new_email)
@@ -161,9 +161,7 @@ describe 'user profile workflow', FeatureSupport.options do
     end
   end
 
-  def agree_to_tos
-    within('form#terms_of_service') do
-      click_button("I Agree")
-    end
+  def skip_welcome_page
+    click_link("Edit my Profile")
   end
 end

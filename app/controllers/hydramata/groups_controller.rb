@@ -15,7 +15,6 @@ class Hydramata::GroupsController < ApplicationController
   before_filter :load_and_authorize_group_for_read, only: [:show]
   before_filter :load_and_authorize_group, only: [:edit, :delete, :update, :destroy]
   before_filter :authenticate_user!
-  before_filter :agreed_to_terms_of_service!
   before_filter :force_update_user_profile!
 
   self.copy_blacklight_config_from(CatalogController)

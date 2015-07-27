@@ -30,6 +30,18 @@ module CurateController
     helper_method :sufia
   end
 
+  def after_sign_in_path_for(resource)
+    unless resource.waived_welcome_page
+      new_welcome_page_path
+    else
+      landing_page
+    end  
+  end
+
+  def landing_page
+    catalog_index_path
+  end
+
 
   # Please be sure to impelement current_user and user_session. Blacklight depends on
   # these methods in order to perform user specific actions.
@@ -89,18 +101,8 @@ module CurateController
       return true
     else
       redirect_to edit_user_registration_path
+      flash[:notice] = "Please review your personal details before using Scholar@UC."
       return false
     end
   end
-
-  def agreed_to_terms_of_service!
-    return false unless current_user
-    if current_user.agreed_to_terms_of_service?
-      return current_user
-    else
-      redirect_to new_terms_of_service_agreement_path
-      return false
-    end
-  end
-
 end
