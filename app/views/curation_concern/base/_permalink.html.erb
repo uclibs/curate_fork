@@ -1,4 +1,4 @@
-<% page = I18n.t('sufia.application_uri') + common_object_path(curation_concern.noid) %>
+<% page_url = Curate.permanent_url_for(curation_concern) %>
 <p>
-  Alternative link to this page: <%= link_to page, page %>
+  Permanent link to this page: <%= link_to page_url, page_url %>
 </p>
