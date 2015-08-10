@@ -103,7 +103,7 @@ describe 'Profile for a Person: ' do
     let(:email) { 'manager2@example.com' }
     let(:manager_user) { FactoryGirl.create(:user, email: email) }
 
-    let(:manager_2) {FactoryGirl.create(:account, email: 'manager@example.com', name: 'Stan Theman')}
+    let(:manager_2) {FactoryGirl.create(:account, email: 'manager@example.com', first_name: 'Stan', last_name: 'Theman')}
     let!(:user) {manager_2.user}
     let!(:person) {manager_2.person}
 
