@@ -6,11 +6,13 @@ namespace :embargomanager do
     FOURTEEN_DAYS = 14
     THIRTY_DAYS = 30
     ZERO_DAYS = 0
+    results_cap = 1000000
 
-    solr_results = ActiveFedora::SolrService.query( 'embargo_release_date_dtsi:[* TO *]' )
+    solr_results = ActiveFedora::SolrService.query( 'embargo_release_date_dtsi:[* TO *]', rows: results_cap )
     solr_results.each do |work|
 
       days_until_release = (Date.parse(work['embargo_release_date_dtsi']) - Date.today).to_i
+
       receiver = work['depositor_tesim']
       mail_contents = work['desc_metadata__title_tesim']
 
