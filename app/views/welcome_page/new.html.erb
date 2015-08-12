@@ -1,24 +1,38 @@
-<% content_for :main_column_class, 'span8 offset2' %>
-<% content_for :page_header do %>
+<% content_for :main_column_class, 'span10 offset1' %>
+<% content_for :page_title, "#{application_name} Welcome Page" %>
 
-<h2><%= I18n.t('sufia.product_name') %> Welcome Page</h2>
+<%= render 'shared/header' %>
 
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="span12">
 
-<% if skip_new_user_help? && user_waived_welcome_page? %>
-  <%= render "welcome_text" %>
-<% elsif skip_new_user_help? %>
-  <%= form_tag welcome_page_index_path, method: :post, id: "waive_welcome_page" do %>
-    <div class="form-actions centered">
-      <%= submit_tag controller.waive_welcome_page_text, :class=> 'btn btn-primary' %>
-      <%= submit_tag controller.do_not_waive_welcome_page_text, :class=> 'btn btn-link'  %>
+      <% if skip_new_user_help? && user_waived_welcome_page? %>
+        <%= render "welcome_text" %>
+      <% elsif skip_new_user_help? %>
+        <%= form_tag welcome_page_index_path, method: :post, id: "waive_welcome_page_form" do %>
+          <div class="form-actions centered">
+            <div class="form-group">
+              <label class="category-select">
+                <%= check_box_tag :waive_welcome_page %>
+                I don't need to see this anymore
+              </label>
+            </div>
+            <div class="form-group">
+              <%= submit_tag "Continue", :class=> 'btn btn-primary' %>
+            </div>
+          </div>
+        <% end %>
+        <%= render "welcome_text" %>
+      <% else %>
+        <p>Next you’re going to edit your profile to make sure all your personal details are correct, but first please take a moment to review the help information below.</p>
+        <%= render "welcome_text" %>
+        <div class="btn-group">
+          <%= link_to "Edit my Profile", edit_user_registration_path, class: 'btn btn-primary' %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-  <%= render "welcome_text" %>
-<% else %>
-  <p>Next you’re going to edit your profile to make sure all your personal details are correct, but first please take a moment to review the help information below.</p>
-  <%= render "welcome_text" %>
-  <div class="btn-group">
-    <%= link_to "Edit my Profile", edit_user_registration_path, class: 'btn' %>
   </div>
-<% end %>
+</div>
+
+<%= render 'footer' %>

@@ -283,8 +283,9 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
   protected
 
   def waive_welcome_page
-    within('#waive_welcome_page') do
-      click_on("I don't need to see this page anymore.")
+    within('#waive_welcome_page_form') do
+      check 'waive_welcome_page'
+      click_on('Continue')
     end
   end
 

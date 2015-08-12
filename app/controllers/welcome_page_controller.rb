@@ -4,7 +4,6 @@ class WelcomePageController < ApplicationController
 
   add_breadcrumb 'Welcome Page', lambda {|controller| controller.request.path }
 
-  with_themed_layout '1_column'
   def new
   end
 
@@ -19,21 +18,8 @@ class WelcomePageController < ApplicationController
   end
 
   def user_just_waived_welcome_page?
-    params[:commit] == waive_welcome_page_text
+    params[:waive_welcome_page] == "1"
   end
-
-  WAIVE_WELCOME_PAGE_TEXT = "I don't need to see this page anymore."
-  DO_NOT_WAIVE_WELCOME_PAGE_TEXT = "Continue"
-
-  def waive_welcome_page_text
-    WAIVE_WELCOME_PAGE_TEXT
-  end
-  helper_method :waive_welcome_page_text
-
-  def do_not_waive_welcome_page_text
-    DO_NOT_WAIVE_WELCOME_PAGE_TEXT
-  end
-  helper_method :do_not_waive_welcome_page_text
 
   def skip_new_user_help?
     current_user.user_does_not_require_profile_update

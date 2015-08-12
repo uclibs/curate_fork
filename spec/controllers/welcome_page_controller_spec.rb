@@ -18,8 +18,10 @@ describe WelcomePageController do
 
     describe '#create' do
       describe 'if welcome page waived' do
+        let(:params) { { waive_welcome_page: '1' } }
+
         before(:each) do
-          post :create, commit: controller.waive_welcome_page_text
+          post :create, params
         end
         it 'redirects to landing page' do
           expect(response).to redirect_to(catalog_index_path)
@@ -33,7 +35,7 @@ describe WelcomePageController do
 
       describe 'if welcome page not waived' do
         before(:each) do
-          post :create, commit: controller.do_not_waive_welcome_page_text
+          post :create
         end
 
         it 'redirects to landing page' do
