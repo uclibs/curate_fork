@@ -14,7 +14,7 @@ class Article < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit or reference a preprint or published article."
+  self.human_readable_short_description = "Published or unpublished articles"
 
   self.indefinite_article = 'an'
 

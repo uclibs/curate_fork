@@ -14,7 +14,7 @@ class GenericWork < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any non-text-based document (other than a dataset or image)."
+  self.human_readable_short_description = "Files other than text, datasets, or images: audio, video, presentation slides, etc."
 
   attribute :alternate_title,
     datastream: :descMetadata, multiple: true
