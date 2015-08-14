@@ -13,7 +13,7 @@ class Image < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Any image file: art, photograph, poster, etc."
+  self.human_readable_short_description = "Visual content: art, photographs, posters, graphics."
 
   def self.valid_types
     [ 'Poster',

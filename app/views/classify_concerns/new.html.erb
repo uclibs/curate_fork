@@ -8,7 +8,9 @@
 
 <div class="row-fluid">
   <ul class="classify-work">
-    <% classify_concern.all_curation_concern_classes.each do |klass| %>
+    <% ####### order will need to be changed again when generic works is renamed as 'other works' ######%>
+    <% order = [0,2,1,4,3] %>
+    <% order.map{|x| classify_concern.all_curation_concern_classes[x]}.each do |klass| %>
       <% if can? :create, klass %>
         <li class="work-type">
           <h3 class="title"><%= klass.human_readable_type %></h3>

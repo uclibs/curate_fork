@@ -14,7 +14,7 @@ class Dataset < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "One or more files related to your research."
+  self.human_readable_short_description = "Files containing collections of data, including: raw data, spreadsheets, logs, etc."
 
   attribute :alternate_title,
     datastream: :descMetadata, multiple: true

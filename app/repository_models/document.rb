@@ -14,7 +14,7 @@ class Document < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any text-based document (other than an article)."
+  self.human_readable_short_description = "Text-based works other than articles: books, manuscripts, etc."
 
   def self.valid_types
     [ 'Book',
