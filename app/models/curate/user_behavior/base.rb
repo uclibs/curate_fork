@@ -11,8 +11,8 @@ module Curate
         repository_id?
       end
 
-      def agree_to_terms_of_service!
-        update_column(:agreed_to_terms_of_service, true)
+      def waive_welcome_page!
+        update_column(:waived_welcome_page, true)
       end
 
       def collections

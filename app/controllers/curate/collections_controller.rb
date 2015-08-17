@@ -27,7 +27,6 @@ class Curate::CollectionsController < ApplicationController
   add_breadcrumb 'Collections', lambda {|controller| controller.request.path }
 
   before_filter :authenticate_user!, except: :show
-  before_filter :agreed_to_terms_of_service!
   before_filter :force_update_user_profile!
   before_filter :check_parameters?
 

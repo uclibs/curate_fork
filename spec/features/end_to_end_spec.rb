@@ -11,12 +11,12 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
   let(:person) { FactoryGirl.create(:person_with_user) }
   let(:user) { person.user }
   before do
-    user.agreed_to_terms_of_service = agreed_to_terms_of_service
+    user.waived_welcome_page = waived_welcome_page
     user.sign_in_count = sign_in_count
     user.save
   end
 
-  let(:another_user) { FactoryGirl.create(:user, agreed_to_terms_of_service: true) }
+  let(:another_user) { FactoryGirl.create(:user, waived_welcome_page: true) }
   let(:another_person) { FactoryGirl.create(:person_with_user) }
   let(:prefix) { Time.now.strftime("%Y-%m-%d-%H-%M-%S-%L") }
   let(:initial_title) { "#{prefix} Something Special" }
@@ -44,23 +44,22 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
     end
   end
 
-  describe 'terms of service' do
-    let(:agreed_to_terms_of_service) { false }
-    it "only requires me to agree once" do
+  describe 'welcome page' do
+    let(:waived_welcome_page) { false }
+    it "only needs to be waived once" do
       login_as(user)
-      visit('/')
-      agree_to_terms_of_service
+      visit("welcome_page/new")
+      waive_welcome_page
       logout
 
-      visit('/')
-
       login_as(user)
-      page.assert_selector('#terms_of_service', count: 0)
+      visit("welcome_page/new")
+      page.assert_selector('#waive_welcome_page', count: 0)
     end
   end
 
   describe 'with user who has already agreed to the terms of service' do
-    let(:agreed_to_terms_of_service) { true }
+    let(:waived_welcome_page) { true }
     let(:test_group_1) { FactoryGirl.create(:group, :title=>"Test Group 1")}
     it "displays the start uploading" do
       login_as(user)
@@ -215,9 +214,9 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
   end
 
   describe 'help request' do
-    let(:agreed_to_terms_of_service) { true }
+    let(:waived_welcome_page) { true }
     let(:sign_in_count) { 2 }
-    it "with JS is available for users who are authenticated and agreed to ToS", js: true do
+    it "with JS is available for users who are authenticated and have waived the welcome page", js: true do
       login_as(user)
       visit('/')
       click_link "Help!"
@@ -228,7 +227,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       page.assert_selector('.notice', text: HelpRequestsController::SUCCESS_NOTICE)
     end
 
-    it "without JS is available for users who are authenticated and agreed to ToS", js: false do
+    it "without JS is available for users who are authenticated and have waived the welcome page", js: false do
       login_as(user)
       visit('/')
       click_link "Help!"
@@ -242,7 +241,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
 
   describe '+Add javascript behavior', js: true do
     let(:creators) { ["D'artagnan", "Porthos", "Athos", 'Aramas'] }
-    let(:agreed_to_terms_of_service) { true }
+    let(:waived_welcome_page) { true }
     let(:title) {"Somebody Special's Generic Work" }
     xit 'handles contributor', js: true do
       login_as(user)
@@ -264,35 +263,29 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
     end
   end
 
-  describe 'with a user who has not agreed to terms of service' do
-    let(:agreed_to_terms_of_service) { false }
+  describe 'with a user who has not waived the welcome page' do
+    let(:waived_welcome_page) { false }
     let(:sign_in_count) { 20 }
-    it "displays the terms of service page after authentication" do
+    it "displays the welcome page after authentication" do
       login_as(user)
       visit('/')
-      agree_to_terms_of_service
-      classify_what_you_are_uploading('Generic Work')
-      create_generic_work('I Agree' => true, 'Visibility' => 'visibility_open')
-      path_to_view_work = view_your_new_work
-      path_to_edit_work = edit_your_work
-      view_your_updated_work
-
-      #needs to be updated to accomodate UI changes
-      #view_your_dashboard
-
       logout
-      login_as(another_user)
-      other_persons_work_is_not_in_my_dashboard
-      i_can_see_another_users_open_resource(path_to_view_work)
-      i_cannot_edit_to_another_users_resource(path_to_edit_work)
+
+      visit('/users/sign_in')
+      fill_in("Email", with: user.email)
+      fill_in("Password", with: 'a password')
+      click_on("Sign in")
+
+      page.assert_selector('#waive_welcome_page', count: 1)
     end
   end
 
   protected
 
-  def agree_to_terms_of_service
-    within('#terms_of_service') do
-      click_on("I Agree")
+  def waive_welcome_page
+    within('#waive_welcome_page_form') do
+      check 'waive_welcome_page'
+      click_on('Continue')
     end
   end
 
