@@ -18,6 +18,7 @@ class Curate::CollectionsController < ApplicationController
   include Hydra::AccessControlsEnforcement
   include Curate::FieldsForAddToCollection
   include Sufia::Noid
+  include ParamsHelper
 
   prepend_before_filter :normalize_identifier, only: [:show]
 
@@ -28,6 +29,7 @@ class Curate::CollectionsController < ApplicationController
   before_filter :authenticate_user!, except: :show
   before_filter :agreed_to_terms_of_service!
   before_filter :force_update_user_profile!
+  before_filter :check_parameters?
 
   rescue_from Hydra::AccessDenied, CanCan::AccessDenied do |exception|
     case exception.action
