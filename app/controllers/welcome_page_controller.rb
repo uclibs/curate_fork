@@ -1,5 +1,4 @@
 class WelcomePageController < ApplicationController
-  before_filter :authenticate_user!
   respond_to(:html)
 
   add_breadcrumb 'Welcome Page', lambda {|controller| controller.request.path }
@@ -22,11 +21,13 @@ class WelcomePageController < ApplicationController
   end
 
   def skip_new_user_help?
+    return true unless user_signed_in? 
     current_user.user_does_not_require_profile_update
   end
   helper_method :skip_new_user_help?
 
   def user_waived_welcome_page?
+    return true unless user_signed_in? 
     current_user.waived_welcome_page
   end
   helper_method :user_waived_welcome_page?
