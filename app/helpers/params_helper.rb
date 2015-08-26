@@ -40,13 +40,13 @@ module ParamsHelper
 
   def check_parameters?(params_to_check=[:page, :per_page])
 
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:page].to_i.to_s == params[:page] or params[:page].nil?
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:page].to_i < 1000
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) if params[:page] && params[:page].to_i < 1
+    render(:file => 'public/404.html', :status => 404, :layout => false) unless params[:page].to_i.to_s == params[:page] or params[:page].nil?
+    render(:file => 'public/404.html', :status => 404, :layout => false) unless params[:page].to_i < 1000
+    render(:file => 'public/404.html', :status => 404, :layout => false) if params[:page] && params[:page].to_i < 1
 
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:per_page].to_i.to_s == params[:per_page] or params[:per_page].nil?
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:per_page].to_i < 1000
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) if params[:per_page] && params[:per_page].to_i < 1
+    render(:file => 'public/404.html', :status => 404, :layout => false) unless params[:per_page].to_i.to_s == params[:per_page] or params[:per_page].nil?
+    render(:file => 'public/404.html', :status => 404, :layout => false) unless params[:per_page].to_i < 1000
+    render(:file => 'public/404.html', :status => 404, :layout => false) if params[:per_page] && params[:per_page].to_i < 1
 
     limit_param_length(params[:q], 1000) unless defined?(params[:q]) == nil
     limit_param_length(params["f"]["desc_metadata__creator_sim"], 1000) unless defined?(params["f"]["desc_metadata__creator_sim"]) == nil
@@ -82,7 +82,7 @@ module ParamsHelper
           value.clone.each do |k,v|
             unless defined?(v) == nil
               if v.to_s.include?('waitfor delay') || v.to_s.include?('DBMS_LOCK.SLEEP') || v.to_s.include?('SLEEP(5)') || v.to_s.include?('SLEEP(10)')
-                render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+                render(:file => 'public/404.html', :status => 404, :layout => false)
                 return false
                 break
               end
@@ -91,7 +91,7 @@ module ParamsHelper
         else
           unless defined?(value) == nil
             if value.to_s.include?('waitfor delay') || value.to_s.include?('DBMS_LOCK.SLEEP') || value.to_s.include?('SLEEP(5)') || value.to_s.include?('SLEEP(10)')
-              render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+              render(:file => 'public/404.html', :status => 404, :layout => false)
               return false
               break
             end
@@ -106,7 +106,7 @@ module ParamsHelper
           value.clone.each do |k,v|
             unless defined?(v) == nil
               if v.to_s.include?('javascript:alert')
-                render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+                render(:file => 'public/404.html', :status => 404, :layout => false)
                 return false
                 break
               end
@@ -115,7 +115,7 @@ module ParamsHelper
         else
           unless defined?(value) == nil
             if value.to_s.include?('javascript:alert')
-              render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+              render(:file => 'public/404.html', :status => 404, :layout => false)
               return false
               break
             end
@@ -127,7 +127,7 @@ module ParamsHelper
   protected
 
     def limit_param_length(parameter, length_limit)
-      render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless parameter.to_s.length < length_limit
+      render(:file => 'public/404.html', :status => 404, :layout => false) unless parameter.to_s.length < length_limit
     end
 
 end
