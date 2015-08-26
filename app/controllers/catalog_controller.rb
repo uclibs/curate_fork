@@ -26,6 +26,7 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:hide_managers]
 
   before_filter :check_parameters?
+  before_filter :check_java_script_parameters?
 
   skip_before_filter :default_html_head
 

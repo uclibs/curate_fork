@@ -100,6 +100,30 @@ module ParamsHelper
     end
   end
 
+  def check_java_script_parameters?()
+    params.clone.each do |key, value|
+        if value.is_a?(Hash)
+          value.clone.each do |k,v|
+            unless defined?(v) == nil
+              if v.to_s.include?('javascript:alert')
+                render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+                return false
+                break
+              end
+            end
+          end
+        else
+          unless defined?(value) == nil
+            if value.to_s.include?('javascript:alert')
+              render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+              return false
+              break
+            end
+          end
+        end
+    end
+  end
+
   protected
 
     def limit_param_length(parameter, length_limit)
