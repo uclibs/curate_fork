@@ -38,15 +38,15 @@ module ParamsHelper
     params["works"] = safe_params["works"] unless safe_params["works"].nil?
   end
 
-  def check_parameters?(params_to_check=[:page, :per_page])
+  def check_parameters?
 
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:page].to_i.to_s == params[:page] or params[:page].nil?
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:page].to_i < 1000
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) if params[:page] && params[:page].to_i < 1
+    return_404 unless params[:page].to_i.to_s == params[:page] or params[:page].nil?
+    return_404 unless params[:page].to_i < 1000
+    return_404 if params[:page] && params[:page].to_i < 1
 
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:per_page].to_i.to_s == params[:per_page] or params[:per_page].nil?
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:per_page].to_i < 1000
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) if params[:per_page] && params[:per_page].to_i < 1
+    return_404 unless params[:per_page].to_i.to_s == params[:per_page] or params[:per_page].nil?
+    return_404 unless params[:per_page].to_i < 1000
+    return_404 if params[:per_page] && params[:per_page].to_i < 1
 
     limit_param_length(params[:q], 1000) unless defined?(params[:q]) == nil
     limit_param_length(params["f"]["desc_metadata__creator_sim"], 1000) unless defined?(params["f"]["desc_metadata__creator_sim"]) == nil
@@ -65,15 +65,16 @@ module ParamsHelper
     limit_param_length(params["hydramata_group"]["members_attributes"]["0"]["_destroy"], 100) unless defined?(params["hydramata_group"]["members_attributes"]["0"]["_destroy"]) == nil
     limit_param_length(params["hydramata_group"]["members_attributes"]["1"]["_destroy"], 100) unless defined?(params["hydramata_group"]["members_attributes"]["1"]["_destroy"]) == nil
 
-    limit_param_length(params["article"]["editors_attributes"]["0"]["id"], 100) unless defined?(params["article"]["editors_attributes"]["0"]["id"]) == nil
-    limit_param_length(params["article"]["editors_attributes"]["1"]["id"], 100) unless defined?(params["article"]["editors_attributes"]["1"]["id"]) == nil
-     limit_param_length(params["article"]["editor_groups_attributes"]["0"]["id"], 100) unless defined?(params["article"]["editor_groups_attributes"]["0"]["id"]) == nil
-    limit_param_length(params["article"]["editor_groups_attributes"]["1"]["id"], 100) unless defined?(params["article"]["editor_groups_attributes"]["1"]["id"]) == nil
+    Curate.configuration.registered_curation_concern_types.each do |work_type|
+      work = work_type.underscore
 
-    limit_param_length(params["image"]["related_work_tokens"], 100) unless defined?(params["image"]["related_work_tokens"]) == nil
-    limit_param_length(params["image"]["editor_groups_attributes"]["0"]["id"], 100) unless defined?(params["image"]["editor_groups_attributes"]["0"]["id"]) == nil
-    limit_param_length(params["image"]["editor_groups_attributes"]["1"]["id"], 100) unless defined?(params["image"]["editor_groups_attributes"]["1"]["id"]) == nil
+      limit_param_length(params[work]["editors_attributes"]["0"]["id"], 100) unless defined?(params[work]["editors_attributes"]["0"]["id"]) == nil
+      limit_param_length(params[work]["editors_attributes"]["1"]["id"], 100) unless defined?(params[work]["editors_attributes"]["1"]["id"]) == nil
+      limit_param_length(params[work]["editor_groups_attributes"]["0"]["id"], 100) unless defined?(params[work]["editor_groups_attributes"]["0"]["id"]) == nil
+      limit_param_length(params[work]["editor_groups_attributes"]["1"]["id"], 100) unless defined?(params[work]["editor_groups_attributes"]["1"]["id"]) == nil
 
+      validate_embargo_date(work)
+    end
   end
 
   def check_blind_sql_parameters_loop?()
@@ -82,7 +83,7 @@ module ParamsHelper
           value.clone.each do |k,v|
             unless defined?(v) == nil
               if v.to_s.include?('waitfor delay') || v.to_s.include?('DBMS_LOCK.SLEEP') || v.to_s.include?('SLEEP(5)') || v.to_s.include?('SLEEP(10)')
-                render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+                return_404
                 return false
                 break
               end
@@ -91,7 +92,7 @@ module ParamsHelper
         else
           unless defined?(value) == nil
             if value.to_s.include?('waitfor delay') || value.to_s.include?('DBMS_LOCK.SLEEP') || value.to_s.include?('SLEEP(5)') || value.to_s.include?('SLEEP(10)')
-              render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
+              return_404
               return false
               break
             end
@@ -102,8 +103,19 @@ module ParamsHelper
 
   protected
 
-    def limit_param_length(parameter, length_limit)
-      render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless parameter.to_s.length < length_limit
-    end
+  def limit_param_length(parameter, length_limit)
+    return_404 unless parameter.to_s.length < length_limit
+  end
 
+  def return_404
+    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) 
+  end
+
+  private
+
+  def validate_embargo_date(work)
+    unless (defined?(params[work]['embargo_release_date'])).nil?
+      return_404 unless params[work]['embargo_release_date'] =~ /\d{4}-\d{2}-\d{2}/ || params[work]['embargo_release_date'].blank?
+    end
+  end
 end

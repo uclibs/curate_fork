@@ -24,6 +24,10 @@ module CurationConcern
     prepend_before_filter :normalize_identifier, except: [:index, :new, :create]
     before_filter :curation_concern, except: [:index]
 
+    include ParamsHelper
+    before_filter :check_blind_sql_parameters_loop?
+    before_filter :check_parameters?
+
     class_attribute :excluded_actions_for_curation_concern_authorization
     self.excluded_actions_for_curation_concern_authorization = [:new, :create]
     before_filter :authorize_curation_concern!, except: excluded_actions_for_curation_concern_authorization
