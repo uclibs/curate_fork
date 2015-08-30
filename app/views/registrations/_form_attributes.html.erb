@@ -3,7 +3,8 @@
   <fieldset class="span6">
     <legend>Personal Information</legend>
 
-    <%= f.input :name %>
+    <%= f.input :first_name, hint: 'Please include any middle names or initials here, if desired', required: true  %>
+    <%= f.input :last_name, required: true %>
     <%= f.input :title, label: 'Job Title' %>
     <%= f.input :personal_webpage %>
     <%= f.input :blog %>

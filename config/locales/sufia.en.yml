@@ -38,7 +38,7 @@ en:
         coverage_temporal:
           help:         "<p>Enter the period or date associated with the subject of your %{work_type}.</p><p>Examples:</p><li>19th century</li><li>Middle Ages</li><li>Jurassic Period</li>"
         creator:
-          help:         "<p>Enter the names of creators of the %{work_type}. This could include important authors, co-authors, or other significant contributors.</p>"
+          help:         "<p>Enter the names of creators of the %{work_type}, in <i>LastName, FirstName</i> format. These could include important authors, co-authors, or other significant contributors.</p>"
         cultural_context:
           help:         "<p>Enter the name of culture, people, or adjectival form of country associated with the subject of your %{work_type}.</p><p>Examples:</p><li>American</li><li>Vietnamese</li><li>Inuit</li>"
         date_created:

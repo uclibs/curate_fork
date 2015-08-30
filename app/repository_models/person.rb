@@ -23,6 +23,12 @@ class Person < ActiveFedora::Base
     datastream: :descMetadata, multiple: false,
     label: "Name"
 
+  attribute :first_name,
+    datastream: :descMetadata, multiple: false
+
+  attribute :last_name,
+    datastream: :descMetadata, multiple: false
+
   attribute :email,
     datastream: :descMetadata, multiple: false
 
@@ -52,6 +58,12 @@ class Person < ActiveFedora::Base
 
   attribute :gender,
     datastream: :descMetadata, multiple: false
+
+  def name
+    name = "#{self.first_name} #{self.last_name}"
+    return name unless name.blank? or self.first_name.blank? or self.last_name.blank?
+    user_key
+  end
 
   def validate_work(work)
     !work.is_a?(Person) && !work.is_a?(Collection) && work.is_a?(CurationConcern::Work)
@@ -86,18 +98,6 @@ class Person < ActiveFedora::Base
 
   def date_uploaded
     Time.new(create_date).strftime("%Y-%m-%d")
-  end
-
-  def first_name
-    name_parser.given
-  end
-
-  def last_name
-    name_parser.family
-  end
-
-  def name_parser
-    Namae.parse(self.name).first
   end
 
   def user_key

@@ -21,8 +21,8 @@ describe 'shared/_site_actions.html.erb' do
 
   context 'logged in' do
     let(:person) { double(pid: 'test:1234') }
-    let(:name) { 'My Display Name' }
-    let(:current_user) { User.new(name: name, person: person).tap {|u| u.stub(groups: ['registered'])} }
+    let(:name) { 'Display Name' }
+    let(:current_user) { User.new(first_name: 'Display', last_name: 'Name', person: person).tap {|u| u.stub(groups: ['registered'])} }
     it 'renders a link to create a new user session' do
       expect(rendered).to_not have_login_section
       expect(rendered).to have_add_content_section do
