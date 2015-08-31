@@ -4,6 +4,7 @@ class Hydramata::GroupsController < ApplicationController
   include Hydra::Controller::ControllerBehavior
   include Hydra::AccessControlsEnforcement
   include Hydramata::GroupMembershipActionParser
+  include ParamsHelper
 
   prepend_before_filter :normalize_identifier, only: [:show, :edit, :update]
   Hydramata::GroupsController.solr_search_params_logic += [:only_groups]
@@ -15,8 +16,8 @@ class Hydramata::GroupsController < ApplicationController
   before_filter :load_and_authorize_group_for_read, only: [:show]
   before_filter :load_and_authorize_group, only: [:edit, :delete, :update, :destroy]
   before_filter :authenticate_user!
-  before_filter :agreed_to_terms_of_service!
   before_filter :force_update_user_profile!
+  before_filter :check_parameters?
 
   self.copy_blacklight_config_from(CatalogController)
 
@@ -71,7 +72,7 @@ class Hydramata::GroupsController < ApplicationController
     after_destroy_response(title)
   end
 
-  def setup_form 
+  def setup_form
     @group.permissions_attributes = [{name: current_user.user_key, access: "edit", type: "person"}] if @group.members.blank?
     @group.members << current_user.person if @group.members.blank?
     @group.members.build
@@ -96,7 +97,7 @@ class Hydramata::GroupsController < ApplicationController
     @group = ActiveFedora::Base.find(id, cast: true)
     authorize! :update, @group
   end
-  
+
   def load_and_authorize_group_for_read
     id = id_from_params(:id)
     return nil unless id

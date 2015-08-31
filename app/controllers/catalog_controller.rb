@@ -9,6 +9,7 @@ class CatalogController < ApplicationController
   include Curate::ThemedLayoutController
   include Curate::FieldsForAddToCollection
   include Hydramata::SolrHelper
+  include ParamsHelper
 
   with_themed_layout 'catalog'
 
@@ -24,8 +25,8 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:show_only_editors]
   CatalogController.solr_search_params_logic += [:hide_managers]
 
-  before_filter :agreed_to_terms_of_service!
   before_filter :check_parameters?
+  before_filter :check_java_script_parameters?
 
   skip_before_filter :default_html_head
 
@@ -344,14 +345,6 @@ class CatalogController < ApplicationController
     # mean") suggestion is offered.
     config.spell_max = 5
   end
-
-    def check_parameters?(params_to_check=[:page, :per_page])
-      params_to_check.each do |param|
-        render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[param].to_i.to_s == params[param] or params[param].nil?
-        render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[param].to_i < 1000
-      end
-      render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) unless params[:q].nil? or params[:q].length < 1000
-    end
 
   protected
 

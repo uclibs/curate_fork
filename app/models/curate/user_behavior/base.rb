@@ -11,8 +11,8 @@ module Curate
         repository_id?
       end
 
-      def agree_to_terms_of_service!
-        update_column(:agreed_to_terms_of_service, true)
+      def waive_welcome_page!
+        update_column(:waived_welcome_page, true)
       end
 
       def collections
@@ -32,7 +32,15 @@ module Curate
       end
 
       def name
-        read_attribute(:name) || user_key
+        name = "#{read_attribute(:first_name)} #{read_attribute(:last_name)}" 
+        return name unless name.blank?
+        user_key
+      end
+
+      def inverted_name
+        name = "#{read_attribute(:last_name)}, #{read_attribute(:first_name)}"
+        return name unless read_attribute(:last_name).blank? or read_attribute(:first_name).blank?
+        ""
       end
 
       def groups

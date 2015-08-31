@@ -3,20 +3,23 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
   with_themed_layout '1_column'
   before_filter :remove_viral_files, only: [:create]
 
+  include ParamsHelper
+  before_filter :check_blind_sql_parameters_loop?
+
   def remove_viral_files
     viral_files = []
     clam = ClamAV.instance
     content = attributes_for_actor
 
     unless content.nil? or content["files"].nil?
-      file_attributes = content["files"].collect do |file| 
+      file_attributes = content["files"].collect do |file|
         {file_name: file.original_filename, temp_path: file.tempfile.path }
       end
 
       scan_result = file_attributes.collect do |file|
         { result: clam.scanfile(file[:temp_path]), file_name: file[:file_name] }
       end
-      
+
       scan_result.each do |file_scan|
         viral_files << file_scan[:file_name] unless file_scan[:result].is_a? Fixnum
       end
@@ -24,7 +27,7 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
       if viral_files.any?
         flash[:error] = "A virus was detected in the file #{viral_files.first}. Your work was created, but no files were attached. Please review your files and re-attach."
         content["files"]=nil
-      end    
+      end
     end
   end
 
@@ -53,7 +56,7 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
   # Override setup_form in concrete controllers to get the form ready for display
   def setup_form
     if curation_concern.respond_to?(:creator)
-      curation_concern.creator << current_user.name if curation_concern.creator.empty? && !current_user.can_make_deposits_for.any?
+      curation_concern.creator << current_user.inverted_name if curation_concern.creator.empty? && !current_user.can_make_deposits_for.any?
     end
 
     curation_concern.editors << current_user.person if curation_concern.editors.blank?

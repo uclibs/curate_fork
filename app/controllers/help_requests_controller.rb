@@ -1,7 +1,6 @@
 class HelpRequestsController < ApplicationController
   SUCCESS_NOTICE = "Thank you for your input!"
   with_themed_layout
-  before_filter :agreed_to_terms_of_service!
 
   add_breadcrumb 'Help Request', lambda {|controller| controller.request.path }
 

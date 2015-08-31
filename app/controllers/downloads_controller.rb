@@ -18,7 +18,10 @@ class DownloadsController < ApplicationController
 
   ## Overriding Hydra::Controller::DownloadBehavior.datastream_name to return asset.filename instead of asset.label
   def datastream_name
-    params[:filename] || asset.filename
+    ## Except for objects where the files are avatars
+    unless [Person, Collection].include? asset.class 
+      params[:filename] || asset.filename
+    end
   end
 
   protected

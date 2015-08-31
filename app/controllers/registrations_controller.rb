@@ -21,6 +21,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   protected
 
+  def after_sign_up_path_for(resource)
+    new_welcome_page_path
+  end
+
   def manager_is_updating_a_user_registration(&block)
     manager_is_editing_another_user = params.fetch(:user, {}).fetch(:id, nil)
     if manager_is_editing_another_user

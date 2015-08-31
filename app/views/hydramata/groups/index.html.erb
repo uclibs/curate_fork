@@ -4,6 +4,7 @@
   <% end %>
 </h2>
 <br/>
+<p>Groups are a set of users to through which you may easily grant the privilege to edit specified works. For example, if you work with a group of researchers on a single work, you can create a group of those researchers and grant that group viewing and editing privileges. Groups are like delegates, but whereas delegates have all the powers of the person they represent, groups can only access/edit specific works.</p>
 <%- if has_any_group? %>
   <%= render_pagination_info @response, :entry_name=>'item' %>
   <%= render_document_index %>

@@ -215,7 +215,7 @@ class Account
   end
 
   def sync_profile_title_to_name(update_attributes)
-    return true unless update_attributes[:name]
+    return true unless update_attributes[:last_name] or update_attributes[:first_name]
     profile.update(title: profile_title)
   end
 

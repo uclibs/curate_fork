@@ -3,6 +3,26 @@ require 'spec_helper'
 describe Curate::CollectionsController do
   let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
+=begin
+# {"utf8"=>"✓", "authenticity_token"=>"rY/kKNTuRYlU2KDAUOxv+oVgDLFaxJDyfSRx0PSaNfs=","collectible_id"=>"sufia:9k41zd50j",                                 "profile_collection_id"=>"blah","commit"=>"Add It!"}
+
+  describe "Visit the collection add member page" do
+    it "returns a custom error page" do
+      long_string = ""
+      250.times{long_string << "test"}
+
+      @parameters = { "profile_collection_id"=>"#{long_string}",
+                "collectible_id"=>"sufia%3A2f7634481"
+      }
+
+      put "/collections/add_member", @parameters
+
+#      visit ("/collections/add_member_form?collectible_id=#{long_string}")
+      expect(page).to have_content("The page you were looking for doesn't exist")
+    end
+  end
+=end
+
 
   describe "#new" do
     it 'renders the form' do
