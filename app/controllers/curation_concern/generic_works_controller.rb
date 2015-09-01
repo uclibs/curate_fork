@@ -3,9 +3,6 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
   with_themed_layout '1_column'
   before_filter :remove_viral_files, only: [:create]
 
-  include ParamsHelper
-  before_filter :check_blind_sql_parameters_loop?
-
   def remove_viral_files
     viral_files = []
     clam = ClamAV.instance
