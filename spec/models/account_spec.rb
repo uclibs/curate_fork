@@ -70,18 +70,19 @@ describe Account do
       end
 
       it 'if the person name changes, it keeps profile title in sync' do
-        new_name = 'Meriadoc Brandybuck'
-        subject.update_with_password(current_password: password, name: new_name)
-        person.name.should == new_name
+        new_first_name = 'Meriadoc'
+        new_last_name = 'Brandybuck'
+        subject.update_with_password(current_password: password, first_name: new_first_name, last_name: new_last_name)
         person.profile.reload
-        person.profile.title.should == new_name
+        person.profile.title.should == "#{new_first_name} #{new_last_name}"
       end
 
       it 'if the person name changes, it keeps the user.name in sync' do
-        new_name = 'Meriadoc Brandybuck'
-        subject.update_with_password(current_password: password, name: new_name)
-        person.name.should == new_name
-        person.user.name.should == new_name
+        new_first_name = 'Meriadoc'
+        new_last_name = 'Brandybuck'
+        subject.update_with_password(current_password: password, first_name: new_first_name, last_name: new_last_name)
+        person.name.should == "#{new_first_name} #{new_last_name}"
+        person.user.name.should == "#{new_first_name} #{new_last_name}"
       end
     end
 
@@ -100,7 +101,7 @@ describe Account do
 
   describe '#save via .new_with_session' do
     let(:expected_name) { 'Robert Frost' }
-    let(:attributes) { FactoryGirl.attributes_for(:user, name: expected_name) }
+    let(:attributes) { FactoryGirl.attributes_for(:user, first_name: 'Robert', last_name: 'Frost') }
     let(:session) { {} }
 
     subject { Account.new_with_session(attributes, session) }
@@ -155,8 +156,7 @@ describe Account do
     subject { Account.new(user) }
 
     it 'has a default title for the profile' do
-      subject.name.should == user.name
-      subject.profile.title.should == user.name
+      subject.profile.title.should == "Profile"
     end
   end
 

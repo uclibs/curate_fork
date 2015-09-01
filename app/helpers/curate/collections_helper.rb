@@ -121,7 +121,7 @@ module Curate::CollectionsHelper
 
   def creators(work)
     if work.respond_to?(:creator)
-      "(#{work.creator.to_a.join(', ')})"
+      "(#{work.creator.to_a.join('; ')})"
     else
       ''
     end

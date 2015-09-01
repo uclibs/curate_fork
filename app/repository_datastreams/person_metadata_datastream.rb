@@ -5,6 +5,14 @@ class PersonMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
 
+    map.first_name(to: "firstName", in: RDF::FOAF) do |index|
+      index.as :stored_searchable
+    end
+
+    map.last_name(to: "lastName", in: RDF::FOAF) do |index|
+      index.as :stored_searchable
+    end
+
     map.title(to: "title", in: RDF::FOAF) do |index|
       index.as :stored_searchable
     end

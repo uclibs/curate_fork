@@ -101,6 +101,30 @@ module ParamsHelper
     end
   end
 
+  def check_java_script_parameters?()
+    params.clone.each do |key, value|
+        if value.is_a?(Hash)
+          value.clone.each do |k,v|
+            unless defined?(v) == nil
+              if v.to_s.include?('javascript:alert')
+                return_404
+                return false
+                break
+              end
+            end
+          end
+        else
+          unless defined?(value) == nil
+            if value.to_s.include?('javascript:alert')
+              return_404
+              return false
+              break
+            end
+          end
+        end
+    end
+  end
+
   protected
 
   def limit_param_length(parameter, length_limit)
@@ -112,6 +136,10 @@ module ParamsHelper
   end
 
   private
+
+  def limit_param_length(parameter, length_limit)
+    return_404 unless parameter.to_s.length < length_limit
+  end
 
   def validate_embargo_date(work)
     unless (defined?(params[work]['embargo_release_date'])).nil?

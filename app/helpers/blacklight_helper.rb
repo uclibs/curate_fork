@@ -16,4 +16,9 @@ module BlacklightHelper
   def application_name
     t('sufia.product_name')
   end
+
+  ## Override the default seperator used to display multivalue fields on the index view
+  def field_value_separator
+    tag(:br)
+  end
 end
