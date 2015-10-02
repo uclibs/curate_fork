@@ -40,6 +40,24 @@ describe ApplicationHelper do
     )
   end
 
+  describe '#curation_concern_dublin_core_meta_tags' do
+    describe 'identifier' do
+      let(:identifier_content) { 'doi:foo1bar2' }
+      let(:identifier_meta_tag_name) { 'dc.identifier' }
+      let(:identifier_meta_tag) { "<meta name='#{ identifier_meta_tag_name }' content='#{ identifier_content }'/>" }
+      let(:work_with_identifier) { double(identifier: identifier_content) }
+      let(:work_without_identifer) { double(identifier: '') }
+
+      it 'should return meta tag if the identifer is present' do
+        expect(helper.curation_concern_dublin_core_meta_tags(work_with_identifier)).to include(identifier_meta_tag)
+      end
+
+      it 'should not return meta tag if the identifer is not present' do
+        expect(helper.curation_concern_dublin_core_meta_tags(work_without_identifer)).to_not include (identifier_meta_tag_name)
+      end
+    end
+  end
+
   describe '#curation_concern_attribute_to_html' do
     def render_curation_concern_attribute_html(expected_label, *item_or_collection)
       collection = Array(item_or_collection).flatten.compact

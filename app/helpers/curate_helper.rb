@@ -42,6 +42,12 @@ module CurateHelper
     construct_page_title(text)
   end
 
+  def curation_concern_dublin_core_meta_tags(curation_concern)
+    meta_tags = Array.new
+    meta_tags << "<meta name='dc.identifier' content='#{curation_concern.identifier}'/>" unless curation_concern.identifier.blank?
+    meta_tags.join("\n").html_safe
+  end
+
   # options[:include_empty]
   def curation_concern_attribute_to_html(curation_concern, method_name, label = nil, options = {})
     markup = ""
