@@ -47,7 +47,7 @@
 
 
 .modal {
-  position: fixed;
+  position: absolute;
   top: 10%;
   left: 50%;
   z-index: 1050;
@@ -70,4 +70,8 @@
 
 .modal.fade.in {
   top: 10%;
+}
+
+.modal-collection {
+  position: fixed;
 }
