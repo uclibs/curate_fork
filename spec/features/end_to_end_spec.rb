@@ -18,6 +18,7 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
 
   let(:another_user) { FactoryGirl.create(:user, waived_welcome_page: true) }
   let(:another_person) { FactoryGirl.create(:person_with_user) }
+
   let(:prefix) { Time.now.strftime("%Y-%m-%d-%H-%M-%S-%L") }
   let(:initial_title) { "#{prefix} Something Special" }
   let(:initial_file_path) { __FILE__ }
@@ -46,26 +47,118 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
 
   describe 'welcome page' do
     let(:waived_welcome_page) { false }
-    it "only needs to be waived once" do
+    it "needs to be waived twice" do
       login_as(user)
+      visit("users/edit")
+      fill_in("First name", with: "John")
+      fill_in("Last name", with: "Doe")
+      fill_in("Current password", with: "a password")
+      click_on("Update Account")
+      logout
+
+      login_as(user)
+      visit("/")
       visit("welcome_page/new")
+      page.assert_selector('#waive_welcome_page')
       waive_welcome_page
       logout
 
       login_as(user)
       visit("welcome_page/new")
-      page.assert_selector('#waive_welcome_page', count: 0)
+      page.assert_no_selector('#waive_welcome_page')
     end
   end
 
   describe 'with user who has already agreed to the terms of service' do
     let(:waived_welcome_page) { true }
     let(:test_group_1) { FactoryGirl.create(:group, :title=>"Test Group 1")}
+    let(:test_group_2) { FactoryGirl.create(:group, :title=>"Test Group 2")}
     it "displays the start uploading" do
       login_as(user)
       visit '/'
       click_link("add-content")
       page.should have_content("What are you uploading?")
+    end
+
+    it "allows me to add sections to my profile" do
+      login_as(user)
+      visit('/profile')
+
+      #Add three sections to profile page
+      click_on("Add a Section to my Profile")
+      fill_in('profile_section_title', with: "Public Section")
+      click_on("Create Profile section")
+
+      click_on("Add a Section to my Profile")
+      fill_in('profile_section_title', with: "Private Section")
+      click_on("Create Profile section")
+
+      click_on("Add a Section to my Profile")
+      fill_in('profile_section_title', with: "Institution Section")
+      click_on("Create Profile section")
+
+      #Create three works (one public, one private, and one institution) and add them to profile sections
+      visit new_curation_concern_generic_work_path
+      title_o = SecureRandom.uuid
+      create_generic_work(
+        "Title" => title_o,
+        'Visibility' => 'visibility_open',
+        'Creator' => 'Dante',
+        'I Agree' => true
+      )
+      click_on("Add Generic Work to Collection")
+      select("Public Section")
+      click_on("Add It!")
+
+
+      visit new_curation_concern_generic_work_path
+      title_r = SecureRandom.uuid
+      create_generic_work(
+        "Title" => title_r,
+        'Visibility' => 'visibility_restricted',
+        'Creator' => 'Dante',
+        'I Agree' => true
+      )
+      click_on("Add Generic Work to Collection")
+      select("Private Section")
+      click_on("Add It!")
+
+
+      visit new_curation_concern_generic_work_path
+      title_n = SecureRandom.uuid
+      create_generic_work(
+        "Title" => title_n,
+        'Visibility' => 'visibility_ndu',
+        'Creator' => 'Dante',
+        'I Agree' => true
+      )
+      click_on("Add Generic Work to Collection")
+      select("Institution Section")
+      click_on("Add It!")
+
+      #Confirm sections are created, and the works are in the right places
+      visit('/profile')
+      profile_path = page.current_path
+
+      page.should have_content(title_o)
+      page.should have_content(title_r)
+      page.should have_content(title_n)
+      
+      #Private and institution work should not be visible when logged out
+      logout
+      visit(profile_path)
+
+      page.should have_content(title_o)
+      page.should_not have_content(title_r)
+      page.should_not have_content(title_n)
+
+      #When logged in as a UC user the institution work should be visible, and the private work should NOT
+      login_as(another_user)
+      visit(profile_path)
+
+      page.should have_content(title_o)
+      page.should have_content(title_n)
+      page.should_not have_content(title_r)
     end
 
     it "allows me to directly create a generic work" do
@@ -92,9 +185,76 @@ describe 'end to end behavior', FeatureSupport.options(describe_options) do
       within('.alert.error') do
         page.should have_content('A virus/error was found in one of the uploaded files.')
       end
+    end
 
-#      expect(page).to have_checked_field('visibility_open')
-#      expect(page).to_not have_checked_field('visibility_restricted')
+    it "groups can be added as editors to work" do
+      title = SecureRandom.uuid
+
+      login_as(user)
+
+      visit new_curation_concern_generic_work_path
+
+      #Create the work to be used in the test
+      create_generic_work(
+        "Title" => title,
+        'Visibility' => 'visibility_open',
+        'I Agree' => true,
+        'Creator' => 'Dante'
+      )
+
+      noid = page.current_path.split("/").last
+
+      logout
+
+      #Add another_user to test_group_2 as a member (cannot edit group)
+      test_group_2.add_member(another_person,'member')
+      test_group_2.save!
+      login_as(another_person.user)
+
+      #Confirm another_user cannot edit the group
+      click_on 'My Groups'
+
+      page.should have_content("View")
+      page.should_not have_content("Manage")
+
+      click_on("Test Group 2")
+      page.assert_no_selector('.btn', text: "Edit")
+
+      logout
+
+      #Remove another_user from test_group_2
+      test_group_2.remove_candidate_member(another_person)
+      test_group_2.save!
+
+      #Add test_group_2 to the edit rights of the work created
+      work = ActiveFedora::Base.find("sufia:#{noid}", :cast => :true)
+      work.add_editor_group(test_group_2)
+      work.save!
+
+      #Verify another_user cannot edit the work yet
+      login_as(another_person.user)
+      visit("/works/generic_works/#{noid}")
+      page.should_not have_content("Edit This Generic Work")
+
+      logout
+
+      #Add another_user to test_group_2 as an editor of the group
+      test_group_2.add_member(another_person, 'manager')
+      test_group_2.save!
+      login_as(another_person.user)
+
+      #Verify another_user can edit the group
+      click_on 'My Groups'
+
+      page.should have_content("Manage")
+
+      click_on("Test Group 2")
+
+      page.assert_selector('.btn', text: "Edit")
+
+      #Verify another_user can edit the work
+      visit("/works/generic_works/#{noid}")
+      page.should have_content("Edit This Generic Work")
     end
 
     it "a public item with future embargo is not visible today but is in the future" do

@@ -6,6 +6,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <%= yield(:dublin_core_meta_tags) if content_for?(:dublin_core_meta_tags) %>
     <title><%= content_for?(:page_title) ? yield(:page_title) : default_page_title %></title>
     <meta name="viewport" content="width=device-width">
     <%= csrf_meta_tag %>
