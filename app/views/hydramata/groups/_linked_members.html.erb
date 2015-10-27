@@ -8,7 +8,7 @@
         </label>
       </span>
     </div>
-    <div class="span2 text-center">
+    <div class="span2 text-center hidden">
       Can edit group
     </div>
   </div>
@@ -28,7 +28,7 @@
             </span>
           </div>
           <div class="span2 text-center">
-            <label class="checkbox inline-checkbox"><%= check_box_tag "group_member[edit_users_ids][]", false %></label>
+            <label class="checkbox inline-checkbox">Can edit group<%= check_box_tag "group_member[edit_users_ids][]", false %></label>
             <input id="<%=prefix %>_members_attributes_{{index}}_id" name="<%=prefix %>[members_attributes][{{index}}][id]" type="hidden" value="" />
           </div>
         </div>
@@ -50,7 +50,7 @@
             </span>
           </div>
           <div class="span2 text-center">
-            <label class="checkbox inline-checkbox"><%= check_box_tag "group_member[edit_users_ids][]", "{{value}}", @group.edit_users.include?("{{value}}") %></label>
+            <label class="checkbox inline-checkbox">Can edit group<%= check_box_tag "group_member[edit_users_ids][]", "{{value}}", @group.edit_users.include?("{{value}}") %></label>
           </div>
         </div>
       </li>
@@ -79,7 +79,7 @@
               <% end %>
             </div>
             <div class="span2 text-center">
-              <label class="checkbox inline-checkbox">
+              <label class="checkbox inline-checkbox">Can edit group
                 <% if memberField.object.persisted? %>
                   <% if ( @group.edit_users.include?(memberField.object.user_key) && ( @group.edit_users.size == 1 ) ) %>
                     <%= check_box_tag "current_user_disabled", 'checked', true, disabled: true %>
