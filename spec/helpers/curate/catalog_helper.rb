@@ -73,4 +73,22 @@ describe Curate::CatalogHelper do
       end
     end
   end
+
+  describe "catalog_thumbnail_alt_text" do
+    context "when document is a Person" do
+      let(:document) { double('document', human_readable_type: 'Person', name: 'Firstname Lastname') }
+
+      it "returns the thumbnail with the name" do
+        helper.catalog_thumbnail_alt_text(document).should == "Thumbnail for Firstname Lastname"
+      end
+    end
+    
+    context "when document is not a Person" do
+      let(:document) { double('document', human_readable_type: 'Article', name: 'Title') }
+
+      it "returns the thumbnail with the title" do
+        helper.catalog_thumbnail_alt_text(document).should == "Thumbnail for Title"
+      end
+    end
+  end
 end

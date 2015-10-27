@@ -35,6 +35,14 @@ module Curate::CatalogHelper
     end
   end
 
+  def catalog_thumbnail_alt_text(document)
+    if document.human_readable_type == 'Person'
+      return "Thumbnail for #{document.name}"
+    else
+      return "Thumbnail for #{document.title}"
+    end 
+  end
+
   private
 
     def type_field
