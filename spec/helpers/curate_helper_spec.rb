@@ -40,21 +40,18 @@ describe ApplicationHelper do
     )
   end
 
-  describe '#curation_concern_dublin_core_meta_tags' do
-    describe 'identifier' do
-      let(:identifier_content) { 'doi:foo1bar2' }
-      let(:identifier_meta_tag_name) { 'dc.identifier' }
-      let(:identifier_meta_tag) { "<meta name='#{ identifier_meta_tag_name }' content='#{ identifier_content }'/>" }
-      let(:work_with_identifier) { double(identifier: identifier_content) }
-      let(:work_without_identifer) { double(identifier: '') }
+  describe '#curation_concern_meta_tags' do
+    let(:meta_tags) do
+      { 'Author' => %w(Lucy Xuemao),
+        'Subject' => %w(Cheese) }
+    end
+    let(:html_meta_tags) do
+      "<meta name='Author' content='Lucy'/>\n<meta name='Author' content='Xuemao'/>\n<meta name='Subject' content='Cheese'/>"
+    end
+    let(:work) { double('generic_work', meta_tags: meta_tags) }
 
-      it 'should return meta tag if the identifer is present' do
-        expect(helper.curation_concern_dublin_core_meta_tags(work_with_identifier)).to include(identifier_meta_tag)
-      end
-
-      it 'should not return meta tag if the identifer is not present' do
-        expect(helper.curation_concern_dublin_core_meta_tags(work_without_identifer)).to_not include (identifier_meta_tag_name)
-      end
+    it 'renders the meta tags as meta tag html' do
+      expect(helper.curation_concern_meta_tags(work)).to eq(html_meta_tags)
     end
   end
 

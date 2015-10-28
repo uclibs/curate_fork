@@ -23,5 +23,8 @@ module Curate
   def permanent_url_for(object)
     File.join(Curate.configuration.application_root_url, 'show', object.noid)
   end
-
+  
+  def download_url_for(generic_file)
+    File.join(Curate.configuration.application_root_url, 'downloads', generic_file.noid)
+  end
 end

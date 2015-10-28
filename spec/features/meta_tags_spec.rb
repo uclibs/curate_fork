@@ -244,5 +244,30 @@ describe 'meta tags' do
         expect(page).to have_css(tag, visible: false)
       end
     end
+
+    describe 'attach_files' do
+      let(:work) do 
+        FactoryGirl.create(:generic_work_with_files,
+          visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+      end
+
+      it 'displays meta_tags for attached pdfs' do
+        GenericFile.any_instance.stub(:filename).and_return('File.pdf')
+        visit curation_concern_generic_work_path(work)
+
+        tag_label = 'citation_pdf_url'
+        tag = "meta[name='#{tag_label}']"
+        expect(page).to have_css(tag, visible: false, count: 3)
+      end
+
+      it 'does not display meta_tags for attached non-pdfs' do
+        GenericFile.any_instance.stub(:filename).and_return('File.txt')
+        visit curation_concern_generic_work_path(work)
+
+        tag_label = 'citation_pdf_url'
+        tag = "meta[name='#{tag_label}']"
+        expect(page).to have_css(tag, visible: false, count: 0)
+      end
+    end
   end
 end

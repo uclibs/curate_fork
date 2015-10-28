@@ -8,6 +8,8 @@ describe CurationConcern::WithMetaTags do
         creator: ["One", "Two"])
     end
 
+    before(:each) { Curate.stub(:permanent_url_for).and_return('http://foo.com') }
+
     it 'returns a Hash with Strings for keys and Arrays for values' do
       expect(work.meta_tags).to be_kind_of(Hash)
       expect(work.meta_tags.keys.first).to be_kind_of(String)

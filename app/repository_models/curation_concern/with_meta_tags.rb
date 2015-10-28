@@ -6,7 +6,7 @@ module CurationConcern
       @tags = Hash.new
       meta_tag_fields.each { |field| descriptive_meta_tag_mapping(field) }
       add_meta_tag('citation_public_url', Curate.permanent_url_for(self))
-      ## TODO PDF links
+      add_meta_tag('citation_pdf_url', attached_pdfs)
       @tags
     end
 
@@ -92,6 +92,14 @@ module CurationConcern
           @tags[label] = [value]
         end
       end
+    end
+
+    def attached_pdfs
+      value = Array.new
+      self.generic_files.each do |f|
+        value << Curate.download_url_for(f) if f.filename =~ /\.pdf$/
+      end
+      value
     end
   end
 end
