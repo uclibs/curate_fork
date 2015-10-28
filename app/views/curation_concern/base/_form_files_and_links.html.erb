@@ -18,10 +18,25 @@
 
         <div id="my-tab-content" class="tab-content">
           <div class="tab-pane active" id="file">
-            <fieldset>
-              <legend>Upload a file</legend>
-              <%= f.input :files, as: :file, input_html: { multiple: true }, label: 'Upload a file', hint: "Hold Shift or Command to select multiple files" %>
-            </fieldset>
+            <div class="row">
+              <div class="span6">
+                <fieldset>
+                  <legend>Upload a file</legend>
+                <div class="hidden">
+                  <%= f.input :files, as: :file, input_html: { multiple: true }, label: "Upload a file" %>
+                </div>
+                <div class="input-append">
+                  <input id="file-display" class="input-large uneditable-input" readonly="readonly" type="text">
+                  <a id="upload-btn" class="btn btn-success">
+                    <i class="icon-white icon-upload"></i> Select Files</a>
+                </div>
+              </fieldset>
+           </div>
+           <div class="span6">
+            <p class='help-inline'>
+              <%= I18n.t("sufia.work.input_field.upload_file.help.#{curation_concern.class}") %>
+            </p>
+          </div> 
           </div>
 
           <div class="tab-pane" id="link">
