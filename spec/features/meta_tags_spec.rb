@@ -218,12 +218,11 @@ describe 'meta tags' do
     end
 
     describe 'special fields' do
-      before do
+      let(:work) do
         generic_work = FactoryGirl.create(:public_generic_work,
           creator: "And Another Creator") ## in addition to "The Creator"
-
-        visit curation_concern_generic_work_path(generic_work)
       end
+      before { visit curation_concern_generic_work_path(work) }
 
       it 'handles multiple fields' do
         #for 'author'
@@ -239,6 +238,10 @@ describe 'meta tags' do
       end
 
       it 'displays the permalink as citation_public_url' do
+        tag_label = 'citation_public_url'
+        tag_value = Curate.permanent_url_for(work)
+        tag = "meta[name='#{tag_label}'][content='#{tag_value}']"
+        expect(page).to have_css(tag, visible: false)
       end
     end
   end

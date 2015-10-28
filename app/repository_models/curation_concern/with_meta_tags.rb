@@ -4,8 +4,8 @@ module CurationConcern
 
     def meta_tags
       @tags = Hash.new
-      meta_tag_fields.each { |field| meta_tag_mapping(field) }
-      ## TODO permalink/public_url
+      meta_tag_fields.each { |field| descriptive_meta_tag_mapping(field) }
+      add_meta_tag('citation_public_url', Curate.permanent_url_for(self))
       ## TODO PDF links
       @tags
     end
@@ -19,7 +19,7 @@ module CurationConcern
          requires subject title) + special_meta_tag_fields).uniq
     end
 
-    def meta_tag_mapping(field)
+    def descriptive_meta_tag_mapping(field)
       return if self.send(field).blank?
 
       case field
