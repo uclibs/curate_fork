@@ -34,15 +34,15 @@ en:
         bibliographic_citation:
           help:         "<p>Enter the preferred citation for your %{work_type}. Suggested citation styles: APA, MLA, Chicago, AMA, Turabian.</p>"
         coverage_spatial:
-          help:         "<p>Enter the geographic subject of your %{work_type}.</p><p>Examples:</p><li>Cincinnati, Ohio</li><li>Vancouver, British Columbia</li><li>Sahara Desert</li>"
+          help:         "<p>Enter the geographic subject of your %{work_type}.</p><p>Examples:</p><ul><li>Cincinnati, Ohio</li><li>Vancouver, British Columbia</li><li>Sahara Desert</li></ul>"
         coverage_temporal:
-          help:         "<p>Enter the period or date associated with the subject of your %{work_type}.</p><p>Examples:</p><li>19th century</li><li>Middle Ages</li><li>Jurassic Period</li>"
+          help:         "<p>Enter the period or date associated with the subject of your %{work_type}.</p><p>Examples:</p><ul><li>19th century</li><li>Middle Ages</li><li>Jurassic Period</li></ul>"
         creator:
           help:         "<p>Enter the names of creators of the %{work_type}, in <i>LastName, FirstName</i> format. These could include important authors, co-authors, or other significant contributors.</p>"
         cultural_context:
-          help:         "<p>Enter the name of culture, people, or adjectival form of country associated with the subject of your %{work_type}.</p><p>Examples:</p><li>American</li><li>Vietnamese</li><li>Inuit</li>"
+          help:         "<p>Enter the name of culture, people, or adjectival form of country associated with the subject of your %{work_type}.</p><p>Examples:</p><ul><li>American</li><li>Vietnamese</li><li>Inuit</li></ul>"
         date_created:
-          help:         "<p>Date when the contents of the %{work_type} were created. Enter date formatted as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><li>January 30, 1950 would be entered 1950-01-30</li>"
+          help:         "<p>Date when the contents of the %{work_type} were created. Enter date formatted as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>January 30, 1950 would be entered 1950-01-30</li></ul>"
         description:
           help:         "<p>Enter a summary of your %{work_type}. There is no character limit for this field.</p>"
         date_photographed:
@@ -50,19 +50,19 @@ en:
         genre:
           help:         "<p>Select a genre matching your %{work_type}.</p>"
         inscription:
-          help:         "<p>Any marks, written words, stamps, signatures.</p><p>Examples:</p><li>signed, Paul Klee</li><li>monogram \"AM\"</li>"
+          help:         "<p>Any marks, written words, stamps, signatures.</p><p>Examples:</p><ul><li>signed, Paul Klee</li><li>monogram \"AM\"</li><ul>"
         issn:
           help:         "<p>ISSN of the Journal where the %{work_type} was originally published, if applicable.</p>"
         journal_title:
           help:         "<p>Title of the Journal where the %{work_type} was originally published, if applicable.</p>"
         language:
-          help:         "<p>Enter the language of your %{work_type}.</p><p>Example: <li>English</li><li>Spanish</li><li>Arabic</li>"
+          help:         "<p>Enter the language of your %{work_type}.</p><p>Example: <ul><li>English</li><li>Spanish</li><li>Arabic</li></ul>"
         location:
-          help:         "<p>Name of the geographic location, repository, building, or site.<p></p>Examples:<p><li>Cincinnati, Ohio</li><li>University of Cincinnati Fine Arts Collection</li><li>Aronoff Center for Design and Art</li><li>excavated in Hopewell Culture National Historical Park in Chillicothe, Ohio</li>"
+          help:         "<p>Name of the geographic location, repository, building, or site.<p></p>Examples:<p><ul><li>Cincinnati, Ohio</li><li>University of Cincinnati Fine Arts Collection</li><li>Aronoff Center for Design and Art</li><li>excavated in Hopewell Culture National Historical Park in Chillicothe, Ohio</li></ul>"
         material:
-          help:         "<p>Substance or materials used in the creation of the %{work_type}.</p><p>Examples:</p><li>Oil on canvas</li><li>Mixed media</li>"
+          help:         "<p>Substance or materials used in the creation of the %{work_type}.</p><p>Examples:</p><ul><li>Oil on canvas</li><li>Mixed media</li></ul>"
         measurements:
-          help:         "<p>Dimensions of the %{work_type}.  Use H x W x D.</p><p>Examples:</p><li>5 15/16 x 10 5/8 inches</li><li>7 x 18 cm</li><li>42 minutes</li><li>Dome is 154 feet in diameter</li>"
+          help:         "<p>Dimensions of the %{work_type}.  Use H x W x D.</p><p>Examples:</p><ul><li>5 15/16 x 10 5/8 inches</li><li>7 x 18 cm</li><li>42 minutes</li><li>Dome is 154 feet in diameter</li></ul>"
         note:
           help:         "<p>Enter any additional information about your %{work_type}.</p>"
         publisher:
@@ -71,8 +71,8 @@ en:
         requires:
           help:         "<p>Special software needed to open the %{work_type}</p>"
         source:
-          help:         "<p>Information source assoicated with the work and/or source of %{work_type}, i.e., publication, vendor, donor.</p><p>Examples:</p><li>%{work_type} found in Scobey, David M. Empire City. Philadelphia: Temple Univ Press, 2002: 106.</li><li>Donated by Walter E. Langsam</li>"
+          help:         "<p>Information source assoicated with the work and/or source of %{work_type}, i.e., publication, vendor, donor.</p><p>Examples:</p><ul><li>%{work_type} found in Scobey, David M. Empire City. Philadelphia: Temple Univ Press, 2002: 106.</li><li>Donated by Walter E. Langsam</li></ul>"
         subject:
-          help:         "<p>Enter terms or keywords that describe your %{work_type}.</p>Examples:</p><li>Biology</li><li>Art History</li><li>Economics</li>"
+          help:         "<p>Enter terms or keywords that describe your %{work_type}.</p>Examples:</p><ul><li>Biology</li><li>Art History</li><li>Economics</li></ul>"
         title:
           help:         "<p>Enter the title of your %{work_type}. If the %{work_type} doesn't have a title, please enter a brief descriptive label.</p>"
