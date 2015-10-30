@@ -21,7 +21,7 @@
             <div class="row">
               <div class="span6">
                 <fieldset>
-                  <legend>Upload a file</legend>
+                  <legend class="accessible-hidden">Upload a file</legend>
                 <div class="hidden">
                   <%= f.input :files, as: :file, input_html: { multiple: true }, label: "Upload a file" %>
                 </div>
@@ -37,18 +37,17 @@
               <%= I18n.t("sufia.work.input_field.upload_file.help.#{curation_concern.class}") %>
             </p>
           </div> 
-          </div>
 
           <div class="tab-pane" id="link">
             <fieldset>
-              <legend>Add an external link</legend>
+              <legend class="accessible-hidden">Add an external link</legend>
               <%= f.input :linked_resource_urls, label: "External link", input_html: {class: 'input-xlarge'} %>
             </fieldset>
           </div>
 
           <div class="tab-pane" id="cloud">
             <fieldset>
-              <legend>Upload a remote file</legend>
+              <legend class="accessible-hidden">Upload a remote file</legend>
               <p id="status"></p>
               <%= hidden_field_tag :cloud_resource_urls, nil, class: 'cloud_resource' %>
               <%= button_tag("Click here to upload remote files", type: 'button', class: 'btn btn-large btn-success', id: "browse",
