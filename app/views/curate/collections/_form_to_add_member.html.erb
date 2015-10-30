@@ -3,7 +3,7 @@
 
 <%= form_tag add_member_collections_path, method: :put do %>
   <fieldset class="required <%= fieldset_class %>">
-    <legend>Add this work to a collection</legend>
+    <legend class="accessible-hidden">Add this work to a collection</legend>
     <%= hidden_field_tag :collectible_id, collectible.pid %>
 
     <div class="control-group collection_id">
