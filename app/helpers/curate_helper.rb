@@ -45,7 +45,7 @@ module CurateHelper
   def curation_concern_meta_tags(curation_concern)
     meta_tags = Array.new
     curation_concern.meta_tags.each do |label, value|
-      value.each { |v| meta_tags << "<meta name='#{label}' content='#{v}'/>" }
+      value.each { |v| meta_tags << "<meta name='#{label}' content='#{escape_once(v)}'/>" }
     end
     meta_tags.join("\n").html_safe
   end
