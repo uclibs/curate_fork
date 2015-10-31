@@ -42,9 +42,11 @@ module CurateHelper
     construct_page_title(text)
   end
 
-  def curation_concern_dublin_core_meta_tags(curation_concern)
+  def curation_concern_meta_tags(curation_concern)
     meta_tags = Array.new
-    meta_tags << "<meta name='dc.identifier' content='#{curation_concern.identifier}'/>" unless curation_concern.identifier.blank?
+    curation_concern.meta_tags.each do |label, value|
+      value.each { |v| meta_tags << "<meta name='#{label}' content='#{escape_once(v)}'/>" }
+    end
     meta_tags.join("\n").html_safe
   end
 
