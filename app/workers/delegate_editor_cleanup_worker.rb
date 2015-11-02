@@ -30,7 +30,7 @@ class DelegateEditorCleanupWorker
     type = [Article, Dataset, Document, GenericWork, Image]
     type.each do |klass|
       klass.find_each('edit_access_person_ssim' => grantee.email) do |work|
-        next unless work.owner == grantor.email
+        next unless work.owner != grantee.email
           work.edit_users -= [grantee.email]
           work.editor_ids += [grantor.pid]
           work.editor_ids -= [grantee.pid]
