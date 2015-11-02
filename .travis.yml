@@ -29,3 +29,6 @@ env:
     - SPEC_GROUP=2
     - SPEC_GROUP=1
     - SPEC_GROUP=0
+
+notifications:
+  slack: uc-libraries-digital:7gc9gvfCKedkWXORxCo5Hndx
