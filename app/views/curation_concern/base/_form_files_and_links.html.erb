@@ -19,21 +19,21 @@
         <div id="my-tab-content" class="tab-content">
           <div class="tab-pane active" id="file">
             <fieldset>
-              <legend>Upload a file</legend>
+              <legend class="accessible-hidden">Upload a file</legend>
               <%= f.input :files, as: :file, input_html: { multiple: true }, label: 'Upload a file', hint: "Hold Shift or Command to select multiple files" %>
             </fieldset>
           </div>
 
           <div class="tab-pane" id="link">
             <fieldset>
-              <legend>Add an external link</legend>
+              <legend class="accessible-hidden">Add an external link</legend>
               <%= f.input :linked_resource_urls, label: "External link", input_html: {class: 'input-xlarge'} %>
             </fieldset>
           </div>
 
           <div class="tab-pane" id="cloud">
             <fieldset>
-              <legend>Upload a remote file</legend>
+              <legend class="accessible-hidden">Upload a remote file</legend>
               <p id="status"></p>
               <%= hidden_field_tag :cloud_resource_urls, nil, class: 'cloud_resource' %>
               <%= button_tag("Click here to upload remote files", type: 'button', class: 'btn btn-large btn-success', id: "browse",
