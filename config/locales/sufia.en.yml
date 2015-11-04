@@ -76,3 +76,10 @@ en:
           help:         "<p>Enter terms or keywords that describe your %{work_type}.</p>Examples:</p><ul><li>Biology</li><li>Art History</li><li>Economics</li></ul>"
         title:
           help:         "<p>Enter the title of your %{work_type}. If the %{work_type} doesn't have a title, please enter a brief descriptive label.</p>"
+        upload_file:
+          help:
+            GenericWork:   "Hold Shift or Command to select multiple files"
+            Article:    "A PDF is preferred. Hold Shift or Command to select multiple files" 
+            Image:      "Hold Shift or Command to select multiple files"
+            Document:  "A PDF is preferred. Hold Shift or Command to select multiple files" 
+            Dataset:   "Hold Shift or Command to select multiple files"
