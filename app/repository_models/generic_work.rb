@@ -7,6 +7,11 @@ class GenericWork < ActiveFedora::Base
   include CurationConcern::Embargoable
   include CurationConcern::WithEditors
 
+  include CurationConcern::WithMetaTags
+  def special_meta_tag_fields
+    %i(description language)
+  end
+
   include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: DatasetDatastream
