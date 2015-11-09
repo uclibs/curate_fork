@@ -6,13 +6,25 @@ module CurationConcern
       before_destroy :clear_associations
     end
 
+    def add_reader_group(group)
+      add_group(group, :read)
+    end
+
     def add_editor_group(group)
       add_group(group, :edit)
     end
 
     # @param groups [Array<Hydramata::Group>] a list of groups to add 
+    def add_reader_groups(groups)
+      add_groups(groups, :read)
+    end
+
     def add_editor_groups(groups)
       add_groups(groups, :edit)
+    end
+
+    def remove_reader_group(group)
+      remove_group(group, :read)
     end
 
     def remove_editor_group(group)
@@ -20,26 +32,46 @@ module CurationConcern
     end
 
     # @param groups [Array<Hydramata::Group>] a list of users to remove
+    def remove_reader_groups(groups)
+      remove_groups(groups, :read)
+    end
+
     def remove_editor_groups(groups)
       remove_groups(groups, :edit)
     end
 
     # @param user [User] the user account you want to grant edit access to.
+    def add_reader(user)
+      add_user(user, :read)
+    end
+
     def add_editor(user)
       add_user(user, :edit)
     end
 
     # @param users [Array<User>] a list of users to add
+    def add_readers(users)
+      add_users(users, :read)
+    end
+
     def add_editors(users)
       add_users(users, :edit)
     end
 
     # @param user [User] the user account you want to revoke edit access for.
+    def remove_reader(user)
+      remove_user(user, :read)
+    end
+
     def remove_editor(user)
       remove_user(user, :edit)
     end
 
     # @param users [Array<User>] a list of users to remove
+    def remove_readers(users)
+      remove_users(users, :read)
+    end
+
     def remove_editors(users)
       remove_users(users, :edit)
     end
@@ -52,8 +84,11 @@ module CurationConcern
       if access_type == :edit
         editor_groups << group
         self.permissions_attributes = [{ name: group.pid, access: 'edit', type: 'group' }]
+      elsif access_type == :read
+        set_read_groups([group.pid], [])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
 
       # TODO extent to read groups
@@ -66,8 +101,12 @@ module CurationConcern
         groups.each do |g|
           add_editor_group(g)
         end
+      elsif access_type == :read
+        group_pids = groups.collect { |g| g.pid }
+        set_read_groups(group_pids, [])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
@@ -79,8 +118,11 @@ module CurationConcern
         self.save!
         group.works.delete(self)
         group.save!
+      elsif access_type == :read
+        set_read_groups([], [group.pid])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
@@ -89,8 +131,12 @@ module CurationConcern
         groups.each do |g|
           remove_editor_group(g)
         end
+      elsif access_type == :read
+        group_pids = groups.collect { |g| g.pid }
+        set_read_groups([], group_pids)
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
@@ -99,8 +145,11 @@ module CurationConcern
       if access_type == :edit
         editors << user.person
         self.permissions_attributes = [{ name: user.user_key, access: 'edit', type: 'person' }] unless depositor == user.user_key
+      elsif access_type == :read
+        self.set_read_users([user.user_key], [])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
@@ -109,16 +158,23 @@ module CurationConcern
         users.each do |u|
           add_editor(u)
         end
+      elsif access_type == :read
+        user_ids = users.collect { |u| u.user_key }
+        self.set_read_users(user_ids, [])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
     def remove_user(user, access_type)
       if access_type == :edit
         remove_candidate_editor(user) if can_remove_editor?(user)
+      elsif access_type == :read
+        self.set_read_users([], [user.user_key])
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
 
@@ -127,12 +183,16 @@ module CurationConcern
         users.each do |u|
           remove_editor(u)
         end
+      elsif access_type == :read
+        user_ids = users.collect { |u| u.user_key }
+        self.set_read_users([], user_ids)
+        self.save!
       else
-        access_type_error
+        access_type_error(access_type)
       end
     end
     
-    def access_type_error
+    def access_type_error(access_type)
       raise ArgumentError, "parameter #{access_type} is not a valid access type"
     end
 
