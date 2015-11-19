@@ -149,7 +149,7 @@ describe 'Profile for a Person: ' do
     click_link "My Profile"
     click_link "Update Personal Information"
     within('form.edit_user') do
-      attach_file("Upload the file", image_file)
+      attach_file("Upload a file", image_file)
       fill_in("user[current_password]", with: password)
       click_button "Update Account"
     end

@@ -1,0 +1,10 @@
+<div class="hidden">
+  <%= f.input model, as: :file, input_html: { multiple: file_input_multiple_bool(local_assigns) }, label: "Upload a file" %>
+</div>
+
+<div class="input-append">
+  <input id="file-display" class="input-large uneditable-input" readonly="readonly" type="text" value="No file chosen">
+     <a id="upload-btn" class="btn btn-success">
+       <i class="icon-white icon-upload"></i> Select File<%= 's' if defined?(multiple) %> </a>
+</div>
+

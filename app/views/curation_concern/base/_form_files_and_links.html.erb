@@ -22,15 +22,8 @@
               <div class="span6">
                 <fieldset>
                   <legend class="accessible-hidden">Upload a file</legend>
-                <div class="hidden">
-                  <%= f.input :files, as: :file, input_html: { multiple: true }, label: "Upload a file" %>
-                </div>
-                <div class="input-append">
-                  <input id="file-display" class="input-large uneditable-input" readonly="readonly" type="text">
-                  <a id="upload-btn" class="btn btn-success">
-                    <i class="icon-white icon-upload"></i> Select Files</a>
-                </div>
-              </fieldset>
+                  <%= render "shared/styled_file_input", multiple: true, f: f, model: :files %> 
+                </fieldset>
            </div>
            <div class="span6">
             <p class='help-inline'>
