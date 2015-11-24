@@ -15,6 +15,11 @@ module ParamsHelper
       safe_params["f"]["desc_metadata__subject_sim"] = params["f"]["desc_metadata__subject_sim"]
       safe_params["f"]["generic_type_sim"] = params["f"]["generic_type_sim"]
       safe_params["f"]["human_readable_type_sim"] = params["f"]["human_readable_type_sim"]
+
+      #NEW ADDITIONS
+      safe_params["per_page"] = params["per_page"]
+      safe_params["sort"] = params["sort"]
+
     end
 
     safe_params["controller"] = params["controller"]
@@ -31,6 +36,11 @@ module ParamsHelper
       params["f"]["desc_metadata__subject_sim"] = safe_params["f"]["desc_metadata__subject_sim"] unless safe_params["f"]["desc_metadata__subject_sim"].nil?
       params["f"]["generic_type_sim"] = safe_params["f"]["generic_type_sim"] unless safe_params["f"]["generic_type_sim"].nil?
       params["f"]["human_readable_type_sim"] = safe_params["f"]["human_readable_type_sim"] unless safe_params["f"]["human_readable_type_sim"].nil?
+
+      #NEW ADDITIONS
+      params["per_page"] = safe_params["per_page"] unless safe_params["per_page"].nil?
+      params["sort"] = safe_params["sort"] unless safe_params["sort"].nil?
+
     end
 
     params["controller"] = safe_params["controller"] unless safe_params["controller"].nil?
