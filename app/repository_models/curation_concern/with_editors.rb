@@ -71,7 +71,7 @@ module CurationConcern
       # if they are the depositor or if they are not presently an editor
       # @param user [User] the user to remove
       def can_remove_editor?(user)
-        depositor != user.user_key && editors.include?(user.person)
+        owner != user.user_key && editors.include?(user.person)
       end
 
       def clear_associations
