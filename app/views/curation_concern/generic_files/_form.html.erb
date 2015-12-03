@@ -14,10 +14,7 @@
         <legend>
           Attach Your File
         </legend>
-          <%= f.input :file,
-                      as: :file,
-                      label: 'Upload a file'
-          %>
+        <%= render "shared/styled_file_input", f: f, model: :file %> 
       </fieldset>
     </div>
 
