@@ -35,7 +35,6 @@ module CurationConcern
       apply_depositor_metadata
       apply_owner_metadata
       apply_deposit_date
-      apply_delegates_as_editor
     end
 
     def apply_update_data_to_curation_concern
@@ -78,11 +77,11 @@ module CurationConcern
       owner = owner_from_attributes || user
       curation_concern.edit_users += [owner.user_key]
       curation_concern.owner = owner.user_key
+      apply_delegates_as_editor(owner)
     end
 
-    def apply_delegates_as_editor
-      owner = owner_from_attributes || user
-      user.can_receive_deposits_from.each do |delegate|
+    def apply_delegates_as_editor(owner)
+      owner.can_receive_deposits_from.each do |delegate|
         curation_concern.edit_users += [delegate.user_key]        
       end
     end

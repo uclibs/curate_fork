@@ -26,8 +26,10 @@ describe CurationConcern::BaseActor do
 
   describe 'apply_creation_data_to_curation_concern' do
     let(:proxy_user) { FactoryGirl.create(:user) }
+    let(:proxys_proxy_user) { FactoryGirl.create(:user) }
     before do
       user.can_receive_deposits_from << proxy_user
+      proxy_user.can_receive_deposits_from << proxys_proxy_user
       subject.send(:apply_creation_data_to_curation_concern)
     end
     context 'depositing for yourself' do
@@ -46,6 +48,7 @@ describe CurationConcern::BaseActor do
         expect(curation_concern.depositor).to eq proxy_user.user_key
         expect(curation_concern.owner).to eq user.user_key
         expect(curation_concern.edit_users).to include(user.user_key, proxy_user.user_key)
+        expect(curation_concern.edit_users.length).to eq 2
       end
     end
     context 'depositing on behalf of someone you do not have proxy access for' do
