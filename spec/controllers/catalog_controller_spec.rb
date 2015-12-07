@@ -17,13 +17,22 @@ describe CatalogController do
       end
     end
 
-    context "searching just my works" do
+    context "Searching just my works" do
       it "should return just my works" do
-        get 'index', works: 'mine'
+        get 'index', works: 'mine' 
         response.should be_successful
           assigns(:document_list).map(&:id).should == [work1.id]
       end
     end
+
+    context "Searching just my owned works" do
+      it "should return just my owned works" do
+        get 'index', works: 'owned'
+        response.should be_successful
+          assigns(:document_list).map(&:id).should include (work1.id)
+      end
+    end
+
 
     context "index page" do
       let!(:collection) { FactoryGirl.create(:collection, user: user) }

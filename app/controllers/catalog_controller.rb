@@ -24,6 +24,8 @@ class CatalogController < ApplicationController
   CatalogController.solr_search_params_logic += [:show_only_works]
   CatalogController.solr_search_params_logic += [:show_only_editors]
   CatalogController.solr_search_params_logic += [:hide_managers]
+  CatalogController.solr_search_params_logic += [:show_only_owned]  
+
 
   before_filter :check_parameters?
   before_filter :check_java_script_parameters?
@@ -371,12 +373,19 @@ class CatalogController < ApplicationController
       }
     end
 
+    # show only files owned by current_user
+    
+    def show_only_owned(solr_parameters, user_parameters)
+       if params[:works] == 'owned'
+         solr_parameters[:fq] << "owner_tesim: #{current_user.email}"
+       end
+    end
+
     # show only files with edit permissions in lib/hydra/access_controls_enforcement.rb apply_gated_discovery
     def discovery_permissions
       return ["edit"] if params[:works] == 'mine'
       super
     end
-
 
     # Limits search results just to GenericFiles
     # @param solr_parameters the current solr parameters
